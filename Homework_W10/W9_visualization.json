@@ -49,7 +49,7 @@
           "scale": {
             "type": "threshold",
             "domain": [15, 30, 45, 60, 75],
-            "scheme": "blues"
+            "scheme": "purples"
           },
           "title": "Percentage of Tourists"
         },
