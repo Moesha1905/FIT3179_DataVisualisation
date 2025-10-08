@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Tourism in Malaysia</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+        integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+        crossorigin="anonymous">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 20px;
+    }
+
+    h1 {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      font-size: 2em;
+    }
+
+    .vis-container {
+      margin: 20px auto;
+      display: inline-block;
+      border: none; /* ensures no borders from container */
+    }
+
+    canvas {
+      border: none !important; /* removes possible canvas borders */
+    }
+
+    .small-font {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h1>Tourism in Malaysia</h1>
+      </div>
+    </div>
+
+    <!-- First Row -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div id="vis1" class="vis-container"></div>
+      </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div id="vis2" class="vis-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var embedOptions = {
+      actions: false,
+      width: 800,
+      height: 400,
+      config: {
+        background: "transparent", // removes chart background
+        view: { stroke: "transparent" } // removes border line around chart
+      }
+    };
+
+    var specVis1 = "./W9_visualization.json";
+    var specVis2 = "./line_chart.json";
+
+    vegaEmbed('#vis1', specVis1, embedOptions).catch(console.error);
+    vegaEmbed('#vis2', specVis2, embedOptions).catch(console.error);
+  </script>
+
+</body>
+
+</html>
