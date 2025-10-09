@@ -1,9 +1,9 @@
 body {
   font-family: 'Open Sans', sans-serif;
+  font-display: swap;
   margin: 0;
   padding: 0;
   background-color: #ffffff;
-
   display: flex;
   justify-content: center;
 }
