@@ -1,36 +1,59 @@
+/* Overall page setup */
 body {
-  font-family: 'Open Sans', 'Arial';
-  font-display: swap;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #ffffff;
-  text-align: center;
+
+  display: flex;
+  justify-content: center; /* centers .page horizontally */
 }
 
+/* Central content container */
 .page {
   max-width: 900px;
-  margin: 0 auto;
-  padding: 20px 20px;
+  width: 100%;
+  padding: 40px 20px;
+  text-align: center; /* centers text content */
+  box-sizing: border-box;
 }
 
+/* Page title */
 h1 {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 2em;
+  color: #222;
 }
 
+/* Visualization containers */
 .vis-container {
   margin: 20px auto;
-  display: inline-block;
+  display: flex;
+  justify-content: center; /* centers the chart horizontally */
+  align-items: center;
   border: none;
 }
 
+/* Make Vega charts render cleanly without borders */
 canvas {
   border: none !important;
 }
 
+/* Smaller descriptive text if needed */
 .small-font {
   font-size: 0.9em;
   color: #555;
   margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .page {
+    padding: 20px 10px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
 }

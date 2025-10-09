@@ -2,7 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Tourist Arrivals by State in Malaysia (2019): Percentage Distribution with State Capitals",
-    "font": "Open Sans",
     "fontSize": 15,
     "fontWeight": "bold",
     "anchor": "middle",
@@ -120,8 +119,7 @@
         "dy": -10,
         "fontSize": 10,
         "color": "black",
-        "fontWeight": "bold",
-        "font": "Open Sans"
+        "fontWeight": "bold"
       },
       "encoding": {
         "longitude": {"field": "properties.LONGITUDE"},
@@ -132,15 +130,10 @@
   ],
   "config": {
     "legend": {
-      "labelFont": "Open Sans",
-      "titleFont": "Open Sans",
       "labelFontSize": 11,
       "titleFontSize": 12,
       "orient": "right"
     },
-    "axis": {
-      "labelFont": "Open Sans",
-      "titleFont": "Open Sans"
-    }
+    "axis": {}
   }
 }
