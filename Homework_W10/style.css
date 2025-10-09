@@ -1,0 +1,37 @@
+/* style.css */
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 20px;
+}
+
+h1 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 2em;
+}
+
+.vis-container {
+  margin: 20px auto;
+  display: inline-block;
+  border: none;
+}
+
+canvas {
+  border: none !important;
+}
+
+.small-font {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 20px;
+}
