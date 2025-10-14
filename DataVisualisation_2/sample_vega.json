@@ -43,7 +43,15 @@
             "domain": [15, 30, 45, 60, 75],
             "scheme": "purples"
           },
-          "title": "Percentage of Tourists"
+          "title": "% of Tourists",
+          "legend": {
+            "orient": "none",
+            "direction": "vertical",
+            "legendX": 630,
+            "legendY": 100,
+            "titleAlign": "left",
+            "titleAnchor": "start"
+          }
         },
         "tooltip": [
           {"field": "properties.name", "title": "State"},
@@ -124,9 +132,7 @@
   "config": {
     "legend": {
       "labelFontSize": 11,
-      "titleFontSize": 12,
-      "orient": "right"
-    },
-    "axis": {}
+      "titleFontSize": 12
+    }
   }
 }
