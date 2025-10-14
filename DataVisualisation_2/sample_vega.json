@@ -2,6 +2,11 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 600,
   "height": 400,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
   "projection": {"type": "equalEarth"},
   "layer": [
     {
@@ -45,10 +50,8 @@
           },
           "title": "% of Tourists",
           "legend": {
-            "orient": "none",
+            "orient": "right",
             "direction": "vertical",
-            "legendX": 630,
-            "legendY": 100,
             "titleAlign": "left",
             "titleAnchor": "start"
           }
