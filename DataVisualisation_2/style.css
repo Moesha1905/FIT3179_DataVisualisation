@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 2rem;
+  background-color: #fafafa;
+  color: #333;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 2rem;
+  font-weight: normal;
+  font-size: 3rem;
+}
+
+.dashboard-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid-cell {
+  padding: 1rem;
+  box-sizing: border-box;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-start;   /* align visualization to top (optional) */
+  justify-content: flex-start; /* move visualization to the left */
+  text-align: left;            /* ensure text/content inside aligns left */
+}
+
+.vis-container {
+  width: auto;      /* allow natural Vega width */
+  height: 100%;
+  display: inline-block; /* prevent centering effects */
+}
