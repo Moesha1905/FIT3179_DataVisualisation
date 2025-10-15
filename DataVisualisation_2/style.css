@@ -74,7 +74,11 @@ header span {
   color: inherit;
   border: none; 
 }
-.top-country .placeholder { background: #fff2cc; color: #7a5e00; }
+.top-country .placeholder {   
+  background: none;
+  color: inherit;
+  border: none;  }
+  
 .best-month .placeholder { background: #f3e0ff; color: #5e249d; }
 .slope .placeholder { background: #ffe0e0; color: #992020; }
 .radar-section .placeholder { background: #e6f7ff; color: #005f73; }
