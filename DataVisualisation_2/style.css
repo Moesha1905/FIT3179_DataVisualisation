@@ -1,6 +1,6 @@
 /* General Layout */
 body {
-  font-family: "Segoe UI", Roboto, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background: #f9f9f9;
   color: #333;
   margin: 0;
@@ -20,8 +20,16 @@ header {
 }
 
 header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: #333;
+}
+
+h3{
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.6rem;
+  color: #000;
 }
 
 header span {
@@ -120,7 +128,7 @@ section p {
   border-radius: 16px;
   padding: 1rem;
   width: 80%;       /* smaller width */
-  height: 70%;      /* smaller height */
+  height: 80%;      /* smaller height */
   max-width: 1000px;
   max-height: 650px;
   display: flex;
@@ -238,3 +246,43 @@ section p {
 body.modal-open {
       overflow: hidden;
     }
+  
+/* Ensure modal and Vega container are relative for positioning */
+#choropleth-modal .vega-embed {
+  position: relative;
+}
+
+/* Move Vega controls right under the legend */
+#choropleth-modal .vega-bindings {
+  position: absolute;
+  top: 65%;              /* roughly align vertically with legend */
+  right: -5px;           /* same side as legend */
+  transform: translateY(120%); /* pushes controls below legend */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+/* Optional fine-tuning for alignment */
+#choropleth-modal .vega-bindings label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+#choropleth-modal input[type="range"] {
+  width: 160px;
+  accent-color: #1e88e5;
+}
+
+#choropleth-modal select {
+  padding: 3px 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+}

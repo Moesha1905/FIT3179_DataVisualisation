@@ -6,7 +6,7 @@
   "params": [
     {
       "name": "zoom_level",
-      "value": 1800,
+      "value": 1750,
       "bind": {
         "input": "range",
         "min": 800,
@@ -99,7 +99,7 @@
           "type": "quantitative",
           "scale": {
             "type": "threshold",
-            "domain": [15, 30, 45, 60, 75],
+            "domain": [1, 5, 15, 30, 45, 60, 75],
             "scheme": "blues"
           },
           "title": "% of Tourists"
@@ -118,7 +118,7 @@
         {"calculate": "toNumber(datum.Lon)", "as": "lon_num"},
         {"calculate": "toNumber(datum.Lat)", "as": "lat_num"},
         {
-          "filter": "!(zoom_level < 2000 && (datum.States == 'Perlis' || datum.States == 'Penang' || datum.States == 'Melaka' || datum.States == 'Kuala Lumpur' || datum.States == 'Putrajaya' || datum.States == 'Labuan'))"
+          "filter": "!(zoom_level <= 2600 && (datum.States == 'Perlis' || datum.States == 'Penang' || datum.States == 'Melaka' || datum.States == 'Kuala Lumpur' || datum.States == 'Putrajaya' || datum.States == 'Labuan'))"
         }
       ],
       "mark": {
@@ -138,6 +138,6 @@
   "config": {
     "legend": {"labelFontSize": 11, "titleFontSize": 12},
     "view": {"stroke": "transparent"},
-    "text": {"baseline": "middle"}
+    "text": {"baseline": "bottom"}
   }
 }

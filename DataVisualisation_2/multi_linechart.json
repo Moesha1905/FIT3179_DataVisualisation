@@ -88,7 +88,7 @@
         "fontWeight": "bold",
         "color": "gray",
         "dx": 50,
-        "dy": -350
+        "dy": -385
       },
       "encoding": {
         "x": {"field": "Year", "type": "ordinal"},

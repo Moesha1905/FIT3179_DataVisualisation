@@ -15,7 +15,7 @@
 <body>
   <div class="dashboard">
     <header>
-      <h1>Tourism in Malaysia <span>(from 2015 to 2022)</span></h1>
+      <h1>From Peaks to Recovery: Malaysia's Tourism Evolution</span></h1>
     </header>
 
     <!-- === NUMBER CARDS SECTION === -->
@@ -47,22 +47,22 @@
     <!-- === VISUALISATIONS === -->
     <section class="map-section">
       <div class="map">
-        <h3>Proportional Map</h3>
-        <p>Displays the proportional distribution of visitors across regions.</p>
+        <h3>To Add Proportional Symbol Map</h3>
+        <p>[placeholder for text content regarding proportional symbol map]</p>
         <a href="#map-modal" class="placeholder"><div id="vis1"></div></a>
       </div>
 
       <div class="guest-time">
-        <h3>Choropleth Map</h3>
-        <p>Shows visitor density by area using color gradients.</p>
+        <h3>Tourist Arrivals by State (2019)</h3>
+        <p>[placeholder for text content regarding choropleth map]</p>
         <a href="#choropleth-modal" class="placeholder"><div id="vis2"></div></a>
       </div>
     </section>
 
     <section class="tables">
       <div class="top-country">
-        <h3>Multi Line Chart</h3>
-        <p>Compares tourist expenditure based on category.</p>
+        <h3>Tourism Expenditure Trends by Category</h3>
+        <p>[placeholder for text content regarding multi - line chart map]</p>
         <a href="#multiline-modal" class="placeholder"><div id="vis3"></div></a>
       </div>
 
@@ -90,7 +90,10 @@
 
   <!-- ---------- Fullscreen Modals ---------- -->
   <div id="map-modal" class="modal"><a href="#" class="overlay"></a><div class="modal-content"><div id="modal-vis1"></div></div></div>
-  <div id="choropleth-modal" class="modal"><a href="#" class="overlay"></a><div class="modal-content"><div id="modal-vis2"></div></div></div>
+  <div id="choropleth-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis2"></div></div>
+  </div>
   <div id="multiline-modal" class="modal"><a href="#" class="overlay"></a><div class="modal-content"><div id="modal-vis3"></div></div></div>
   <div id="radar-modal" class="modal"><a href="#" class="overlay"></a><div class="modal-content"><div id="modal-vis4"></div></div></div>
   <div id="slope-modal" class="modal"><a href="#" class="overlay"></a><div class="modal-content"><div id="modal-vis5"></div></div></div>
@@ -100,7 +103,7 @@
   <script>
     const vis1 = "LINK_1_HERE";
     const vis2 = "./choropleth_map.json";
-    const vis3 = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/DataVisualisation_2/multi_linechart.json";
+    const vis3 = "./multi_linechart.json";
     const vis4 = "LINK_4_HERE";
     const vis5 = "LINK_5_HERE";
     const vis6 = "LINK_6_HERE";
@@ -183,7 +186,21 @@
       vegaEmbed('#vis1', vis1, embedOptions);
       vegaEmbed('#modal-vis1', vis1, embedOptions);
       vegaEmbed('#vis2', vis2, embedOptions);
-      vegaEmbed('#modal-vis2', vis2, embedOptions);
+      vegaEmbed('#modal-vis2', vis2, embedOptions).then(result => {
+        const view = result.view;
+
+        const zoomSlider = document.getElementById("zoomSliderModal");
+        const centerSelect = document.getElementById("centerSelectModal");
+
+        zoomSlider.addEventListener("input", () => {
+          view.signal("zoom_level", +zoomSlider.value).runAsync();
+        });
+
+        centerSelect.addEventListener("change", () => {
+          view.signal("center_to", JSON.parse(centerSelect.value)).runAsync();
+        });
+      });
+
       vegaEmbed('#vis3', vis3, embedOptions);
       vegaEmbed('#modal-vis3', vis3, embedOptions);
       vegaEmbed('#vis4', vis4, embedOptions);
