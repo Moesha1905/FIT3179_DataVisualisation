@@ -1,0 +1,221 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "width": 700,
+  "height": 600,
+  "autosize": {"type": "fit", "contains": "padding"},
+  "padding": {"bottom": 10, "right": 10, "top": 10},
+
+  "signals": [
+    {"name": "radius", "update": "min(width, height) / 3"},
+    {
+      "name": "selected_year",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", 2018, 2019, 2020, 2021],
+        "name": "Select Year: "
+      }
+    },
+    {
+      "name": "centerX",
+      "update": "width / 2" 
+    },
+    {
+      "name": "centerY",
+      "update": "height / 2 - 30"
+    }
+  ],
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"Products": "Accommodation", "Year": 2018, "Value": 23.23},
+        {"Products": "Accommodation", "Year": 2019, "Value": 23.42},
+        {"Products": "Accommodation", "Year": 2020, "Value": 23.45},
+        {"Products": "Accommodation", "Year": 2021, "Value": 23.47},
+
+        {"Products": "Food & Beverage", "Year": 2018, "Value": 12.11},
+        {"Products": "Food & Beverage", "Year": 2019, "Value": 12.26},
+        {"Products": "Food & Beverage", "Year": 2020, "Value": 14.23},
+        {"Products": "Food & Beverage", "Year": 2021, "Value": 16.59},
+
+        {"Products": "Transport", "Year": 2018, "Value": 15.74},
+        {"Products": "Transport", "Year": 2019, "Value": 16.45},
+        {"Products": "Transport", "Year": 2020, "Value": 17.14},
+        {"Products": "Transport", "Year": 2021, "Value": 54.05},
+
+        {"Products": "Travel Agencies", "Year": 2018, "Value": 3.98},
+        {"Products": "Travel Agencies", "Year": 2019, "Value": 4.13},
+        {"Products": "Travel Agencies", "Year": 2020, "Value": 4.12},
+        {"Products": "Travel Agencies", "Year": 2021, "Value": 0.19},
+
+        {"Products": "Culture & Recreation", "Year": 2018, "Value": 2.43},
+        {"Products": "Culture & Recreation", "Year": 2019, "Value": 2.58},
+        {"Products": "Culture & Recreation", "Year": 2020, "Value": 2.80},
+        {"Products": "Culture & Recreation", "Year": 2021, "Value": 2.89},
+
+        {"Products": "Auto Fuel", "Year": 2018, "Value": 0.63},
+        {"Products": "Auto Fuel", "Year": 2019, "Value": 0.48},
+        {"Products": "Auto Fuel", "Year": 2020, "Value": 0.17},
+        {"Products": "Auto Fuel", "Year": 2021, "Value": 0.00},
+
+        {"Products": "Tourism Goods", "Year": 2018, "Value": 30.20},
+        {"Products": "Tourism Goods", "Year": 2019, "Value": 30.53},
+        {"Products": "Tourism Goods", "Year": 2020, "Value": 33.38},
+        {"Products": "Tourism Goods", "Year": 2021, "Value": 3.88},
+
+        {"Products": "Tourism Services", "Year": 2018, "Value": 2.94},
+        {"Products": "Tourism Services", "Year": 2019, "Value": 2.45},
+        {"Products": "Tourism Services", "Year": 2020, "Value": 2.86},
+        {"Products": "Tourism Services", "Year": 2021, "Value": 0.97}
+      ],
+      "transform": [
+        {"type": "filter", "expr": "selected_year == 'All' || datum.Year == selected_year"}
+      ]
+    },
+    {
+      "name": "keys",
+      "source": "table",
+      "transform": [{"type": "aggregate", "groupby": ["Products"]}]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "angular",
+      "type": "point",
+      "range": {"signal": "[-PI, PI]"},
+      "padding": 0.5,
+      "domain": {"data": "table", "field": "Products"}
+    },
+    {
+      "name": "radial",
+      "type": "linear",
+      "range": {"signal": "[0, radius]"},
+      "zero": true,
+      "nice": false,
+      "domain": {"data": "table", "field": "Value"},
+      "domainMin": 0
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [2018, 2019, 2020, 2021],
+      "range": ["#1b9e77", "#d95f02", "#7570b3", "#e7298a"]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "encode": {
+        "enter": {"x": {"signal": "centerX"}, "y": {"signal": "centerY"}}
+      },
+      "marks": [
+        {
+          "type": "group",
+          "name": "categories",
+          "zindex": 2,
+          "from": {"facet": {"data": "table", "name": "facet", "groupby": ["Year"]}},
+          "marks": [
+            {
+              "type": "line",
+              "from": {"data": "facet"},
+              "encode": {
+                "enter": {
+                  "interpolate": {"value": "linear-closed"},
+                  "x": {
+                    "signal": "scale('radial', datum.Value) * cos(scale('angular', datum.Products))"
+                  },
+                  "y": {
+                    "signal": "scale('radial', datum.Value) * sin(scale('angular', datum.Products))"
+                  },
+                  "stroke": {"scale": "color", "field": "Year"},
+                  "strokeWidth": {"value": 2},
+                  "strokeOpacity": {"value": 0.4},
+                  "fill": {"scale": "color", "field": "Year"},
+                  "fillOpacity": {"value": 0.06},
+                  "tooltip": {
+                    "signal": "{'Product': datum.Products, 'Year': datum.Year, 'Percentage': format(datum.Value, ',.2f')}"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "rule",
+          "name": "radial-grid",
+          "from": {"data": "keys"},
+          "zindex": 0,
+          "encode": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"value": 0},
+              "x2": {"signal": "radius * cos(scale('angular', datum.Products))"},
+              "y2": {"signal": "radius * sin(scale('angular', datum.Products))"},
+              "stroke": {"value": "#ccc"},
+              "strokeWidth": {"value": 1}
+            }
+          }
+        },
+        {
+          "type": "line",
+          "name": "outer-line",
+          "from": {"data": "keys"},
+          "zindex": 1,
+          "encode": {
+            "enter": {
+              "interpolate": {"value": "linear-closed"},
+              "x": {"signal": "radius * cos(scale('angular', datum.Products))"},
+              "y": {"signal": "radius * sin(scale('angular', datum.Products))"},
+              "stroke": {"value": "#ccc"},
+              "strokeWidth": {"value": 1}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "name": "product-label",
+          "from": {"data": "keys"},
+          "zindex": 3,
+          "encode": {
+            "enter": {
+              "x": {"signal": "(radius + 12) * cos(scale('angular', datum.Products))"},
+              "y": {"signal": "(radius + 12) * sin(scale('angular', datum.Products))"},
+              "text": {"field": "Products"},
+              "align": [
+                {"test": "abs(scale('angular', datum.Products)) > PI / 2", "value": "right"},
+                {"value": "left"}
+              ],
+              "baseline": [
+                {"test": "scale('angular', datum.Products) > 0", "value": "top"},
+                {"test": "scale('angular', datum.Products) == 0", "value": "middle"},
+                {"value": "bottom"}
+              ],
+              "fill": {"value": "black"},
+              "fontSize": {"value": 12},
+              "fontWeight": {"value": "bold"}
+            }
+          }
+        }
+      ]
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "color",
+      "title": "Year",
+      "orient": "bottom-right",
+      "encode": {
+        "title": {
+          "enter": {"fontSize": {"value": 13}, "fontWeight": {"value": "bold"}}
+        },
+        "labels": {"enter": {"fontSize": {"value": 12}}},
+        "symbols": {"enter": {"size": {"value": 90}}}
+      }
+    }
+  ]
+}
