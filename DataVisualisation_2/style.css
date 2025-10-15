@@ -78,7 +78,7 @@ header span {
   background: none;
   color: inherit;
   border: none;  }
-  
+
 .best-month .placeholder { background: #f3e0ff; color: #5e249d; }
 .slope .placeholder { background: #ffe0e0; color: #992020; }
 .radar-section .placeholder { background: #e6f7ff; color: #005f73; }
@@ -164,4 +164,16 @@ section p {
     height: 70%;
     border-radius: 10px;
   }
+}
+
+/* --- Make full visualization area clickable --- */
+.placeholder {
+  position: relative;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Disable pointer events for Vega containers inside placeholders */
+.placeholder > div {
+  pointer-events: none !important;
 }

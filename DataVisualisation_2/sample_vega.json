@@ -46,7 +46,7 @@
           "scale": {
             "type": "threshold",
             "domain": [15, 30, 45, 60, 75],
-            "scheme": "purples"
+            "scheme": "blues"
           },
           "title": "% of Tourists",
           "legend": {
