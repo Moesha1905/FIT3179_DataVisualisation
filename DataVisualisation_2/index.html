@@ -1,73 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>Tourism in Malaysia</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berlin and Brandenburg Tourism Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 
-  <!-- Vega Libraries -->
+  <!-- Vega & Vega-Lite Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-  <!-- Pure.css -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
-        integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
-        crossorigin="anonymous">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Custom Styles -->
-  <link rel="stylesheet" type="text/css" href="./style.css" media="all">
 </head>
 
 <body>
+  <div class="dashboard">
+    <header>
+      <h1>Berlin and Brandenburg Tourism <span>(from 2010 to 2016)</span></h1>
+    </header>
 
-  <div class="page">
-    <div class="pure-g">
-      <div class="pure-u-1">
-        <h1>Tourism in Malaysia</h1>
+    <!-- Map + Guests over Time -->
+    <section class="map-section">
+      <div class="map">
+        <h3>Proportional Map</h3>
+        <p>Displays the proportional distribution of visitors across regions.</p>
+        <a href="#map-modal" class="placeholder"><div id="vis1"></div></a>
       </div>
-    </div>
 
-    <!--  Correct 2x2 grid layout -->
-    <div class="pure-g dashboard-grid">
-      <div class="pure-u-1 pure-u-md-1-2 grid-cell">
-        <div id="vis1" class="vis-container"></div>
+      <div class="guest-time">
+        <h3>Choropleth Map</h3>
+        <p>Shows visitor density by area using color gradients.</p>
+        <a href="#choropleth-modal" class="placeholder"><div id="vis2"></div></a>
       </div>
-      <div class="pure-u-1 pure-u-md-1-2 grid-cell">
-        <div id="vis2" class="vis-container"></div>
+    </section>
+
+    <!-- Lower Section -->
+    <section class="tables">
+      <div class="top-country">
+        <h3>Multi Line Chart</h3>
+        <p>Compares visitor trends from the top 10 countries over time.</p>
+        <a href="#multiline-modal" class="placeholder"><div id="vis3"></div></a>
       </div>
-      <div class="pure-u-1 pure-u-md-1-2 grid-cell">
-        <div id="vis3" class="vis-container"></div>
+
+      <div class="best-month">
+        <h3>Radar Chart</h3>
+        <p>Highlights the best months for visits across multiple attributes.</p>
+        <a href="#radar-modal" class="placeholder"><div id="vis4"></div></a>
       </div>
-      <div class="pure-u-1 pure-u-md-1-2 grid-cell">
-        <div id="vis4" class="vis-container"></div>
+    </section>
+
+    <section class="slope-section">
+      <div class="slope">
+        <h3>Slope Chart</h3>
+        <p>Illustrates changes in visitor numbers between two key periods.</p>
+        <a href="#slope-modal" class="placeholder"><div id="vis5"></div></a>
       </div>
-    </div>
+
+      <div class="radar-section">
+        <h3>Word Cloud Chart</h3>
+        <p>Shows the most frequent words or themes related to tourism.</p>
+        <a href="#wordcloud-modal" class="placeholder"><div id="vis6"></div></a>
+      </div>
+    </section>
   </div>
 
+  <!-- ---------- Fullscreen Modals ---------- -->
+  <div id="map-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis1"></div></div>
+  </div>
+
+  <div id="choropleth-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis2"></div></div>
+  </div>
+
+  <div id="multiline-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis3"></div></div>
+  </div>
+
+  <div id="radar-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis4"></div></div>
+  </div>
+
+  <div id="slope-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis5"></div></div>
+  </div>
+
+  <div id="wordcloud-modal" class="modal">
+    <a href="#" class="overlay"></a>
+    <div class="modal-content"><div id="modal-vis6"></div></div>
+  </div>
+
+  <!-- ---------- Vega-Lite Embedding Script ---------- -->
   <script type="text/javascript">
     const embedOptions = {
-      actions: false,
-      width: 500,
-      height: 300,
       config: {
         background: "transparent",
         view: { stroke: "transparent" }
-      }
+      },
+      actions: false,
+      autosize: { type: "fit", contains: "padding" }
     };
 
-    const specVis1 = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/Homework_W10/W9_visualization.json";
-    const specVis2 = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/Homework_W10/line_chart.json";
-    const specVis3 = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/Homework_W10/W9_visualization.json";
-    const specVis4 = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/Homework_W10/line_chart.json";
+    // Normal dashboard charts
+    vegaEmbed('#vis1', "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/sample_vega.json", embedOptions);
+    vegaEmbed('#vis2', "LINK_2_HERE", embedOptions);
+    vegaEmbed('#vis3', "LINK_3_HERE", embedOptions);
+    vegaEmbed('#vis4', "LINK_4_HERE", embedOptions);
+    vegaEmbed('#vis5', "LINK_5_HERE", embedOptions);
+    vegaEmbed('#vis6', "LINK_6_HERE", embedOptions);
 
-    vegaEmbed('#vis1', specVis1, embedOptions).catch(console.error);
-    vegaEmbed('#vis2', specVis2, embedOptions).catch(console.error);
-    vegaEmbed('#vis3', specVis3, embedOptions).catch(console.error);
-    vegaEmbed('#vis4', specVis4, embedOptions).catch(console.error);
+    // Fullscreen modals
+    vegaEmbed('#modal-vis1', "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/sample_vega.json", embedOptions);
+    vegaEmbed('#modal-vis2', "LINK_2_HERE", embedOptions);
+    vegaEmbed('#modal-vis3', "LINK_3_HERE", embedOptions);
+    vegaEmbed('#modal-vis4', "LINK_4_HERE", embedOptions);
+    vegaEmbed('#modal-vis5', "LINK_5_HERE", embedOptions);
+    vegaEmbed('#modal-vis6', "LINK_6_HERE", embedOptions);
+
+    // Resize fix when opening/closing modals
+    window.addEventListener('hashchange', () => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    
   </script>
-
 </body>
 </html>

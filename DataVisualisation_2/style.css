@@ -1,34 +1,157 @@
+/* General Layout */
 body {
-  margin: 0;
-  padding: 2rem;
-  background-color: #fafafa;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: #f9f9f9;
   color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+header {
   text-align: center;
 }
 
-h1 {
-  margin-bottom: 2rem;
-  font-weight: normal;
-  font-size: 3rem;
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
-.dashboard-grid {
-  max-width: 1200px;
-  margin: 0 auto;
+header span {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #777;
 }
 
-.grid-cell {
-  padding: 1rem;
-  box-sizing: border-box;
-  min-height: 320px;
+/* Grid Layouts */
+.map-section,
+.tables,
+.slope-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Placeholder Style */
+.placeholder {
+  background: #f3e3c4;
+  color: #8a4b15;
+  border-radius: 10px;
+  min-height: 250px;
   display: flex;
-  align-items: flex-start;   /* align visualization to top (optional) */
-  justify-content: flex-start; /* move visualization to the left */
-  text-align: left;            /* ensure text/content inside aligns left */
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
 }
 
-.vis-container {
-  width: auto;      /* allow natural Vega width */
+.placeholder:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder > div {
+  width: 100%;
   height: 100%;
-  display: inline-block; /* prevent centering effects */
+}
+
+/* Color Themes */
+.map .placeholder {
+  background: none;
+  color: inherit;
+  border: none;
+}
+.guest-time .placeholder { background: #e0ffe5; color: #20643a; }
+.top-country .placeholder { background: #fff2cc; color: #7a5e00; }
+.best-month .placeholder { background: #f3e0ff; color: #5e249d; }
+.slope .placeholder { background: #ffe0e0; color: #992020; }
+.radar-section .placeholder { background: #e6f7ff; color: #005f73; }
+
+section p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+/* --- Modal Styling (Compact, Centered Popups) --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1000;
+}
+
+.modal:target {
+  display: flex;
+}
+
+/* Clickable overlay to close modal */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Smaller popup window instead of fullscreen */
+.modal-content {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  width: 80%;       /* smaller width */
+  height: 70%;      /* smaller height */
+  max-width: 1000px;
+  max-height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.3s ease;
+}
+
+/* Ensure Vega charts fill available modal space */
+.modal-content > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animation for smooth open */
+@keyframes popIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive tweak for small screens */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    height: 70%;
+    border-radius: 10px;
+  }
 }
