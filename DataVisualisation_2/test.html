@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Region Arrivals Dashboard</title>
+
+  <!-- Vega & D3 -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: #f4f6fb;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    header {
+      background: #273c75;
+      color: white;
+      text-align: center;
+      width: 100%;
+      padding: 1.2rem 0;
+      font-size: 1.6rem;
+    }
+
+    .dashboard {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      text-align: center;
+      width: 320px;
+    }
+
+    .region-name {
+      font-size: 1.1rem;
+      color: #555;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    .number-value {
+      font-size: 2.6rem;
+      font-weight: bold;
+      color: #0097e6;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter {
+      margin-top: 1rem;
+    }
+
+    select {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+      width: 70%;
+      transition: border-color 0.2s ease;
+    }
+
+    select:focus {
+      border-color: #0097e6;
+    }
+  </style>
+</head>
+
+<body>
+  <header>Tourism Arrivals</header>
+
+  <div class="dashboard">
+    <div id="region-name" class="region-name">All Regions</div>
+    <div id="region-arrivals" class="number-value">0</div>
+
+    <div class="filter">
+      <select id="region-select">
+        <option value="All">All Regions</option>
+      </select>
+    </div>
+  </div>
+
+  <script>
+    const csvUrl = "./arrivals_region.csv"; // your CSV file path
+
+    vega.loader().load(csvUrl).then(csvData => {
+      const data = d3.csvParse(csvData).map(d => ({
+        Region: d.Region.trim(),
+        Arrivals: +d.Arrivals.replace(/,/g, "")
+      }));
+
+      // Remove TOTAL row
+      const regions = data.map(d => d.Region).filter(r => r.toUpperCase() !== "TOTAL");
+
+      const select = document.getElementById("region-select");
+      regions.forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r;
+        opt.textContent = r;
+        select.appendChild(opt);
+      });
+
+      function updateValue(region) {
+        let selectedValue = 0;
+        let displayName = region;
+
+        if (region === "All") {
+          selectedValue = d3.sum(data.filter(d => d.Region.toUpperCase() !== "TOTAL"), d => d.Arrivals);
+          displayName = "All Regions";
+        } else {
+          const found = data.find(d => d.Region === region);
+          selectedValue = found ? found.Arrivals : 0;
+        }
+
+        document.getElementById("region-name").textContent = displayName;
+        document.getElementById("region-arrivals").textContent = selectedValue.toLocaleString();
+      }
+
+      select.addEventListener("change", e => updateValue(e.target.value));
+
+      // Initial load
+      updateValue("All");
+    });
+  </script>
+</body>
+</html>

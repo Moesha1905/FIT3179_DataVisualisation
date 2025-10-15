@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": "container",
+  "autosize": {"type": "fit", "contains": "padding", "resize": true},
+  "params": [
+    {
+      "name": "zoom_level",
+      "value": 1800,
+      "bind": {
+        "input": "range",
+        "min": 800,
+        "max": 8000,
+        "step": 100,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "center_to",
+      "value": [108, 4],
+      "bind": {
+        "input": "select",
+        "options": [
+          [108, 4],
+          [101.5, 3.1],
+          [103.3, 3.0],
+          [101.6, 2.9],
+          [100.4, 5.5],
+          [100.3, 6.1],
+          [102.0, 5.3],
+          [102.3, 6.1],
+          [101.8, 4.6],
+          [111.8, 2.5],
+          [117.0, 5.3],
+          [100.4, 6.5],
+          [99.7, 6.4],
+          [103.6, 1.6],
+          [115.2, 4.5],
+          [101.7, 3.15],
+          [101.7, 2.9]
+        ],
+        "labels": [
+          "Malaysia (Full View)",
+          "Selangor",
+          "Pahang",
+          "Negeri Sembilan",
+          "Perak",
+          "Penang",
+          "Terengganu",
+          "Kelantan",
+          "Melaka",
+          "Sarawak",
+          "Sabah",
+          "Perlis",
+          "Kedah",
+          "Johor",
+          "Labuan",
+          "Kuala Lumpur",
+          "Putrajaya"
+        ],
+        "name": "Map Centre: "
+      }
+    }
+  ],
+  "projection": {
+    "type": "equalEarth",
+    "center": {"expr": "center_to"},
+    "scale": {"expr": "zoom_level"}
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/Homework_W9/malaysia_majcities.json",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_1"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#e0e0e0", "strokeWidth": 1, "fill": null}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/Homework_W9/malaysia_majcities.json",
+        "format": {"type": "topojson", "feature": "my"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/Homework_W9/touristarrivalsbystate.csv"
+            },
+            "key": "STATES",
+            "fields": ["PROPORTION OF TOURIST"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1},
+      "encoding": {
+        "color": {
+          "field": "PROPORTION OF TOURIST",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [15, 30, 45, 60, 75],
+            "scheme": "blues"
+          },
+          "title": "% of Tourists"
+        },
+        "tooltip": [
+          {"field": "properties.name", "title": "State"},
+          {"field": "PROPORTION OF TOURIST", "title": "Tourist Percentage"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/malaysia_states_latlon.csv"
+      },
+      "transform": [
+        {"calculate": "toNumber(datum.Lon)", "as": "lon_num"},
+        {"calculate": "toNumber(datum.Lat)", "as": "lat_num"},
+        {
+          "filter": "!(zoom_level < 2000 && (datum.States == 'Perlis' || datum.States == 'Penang' || datum.States == 'Melaka' || datum.States == 'Kuala Lumpur' || datum.States == 'Putrajaya' || datum.States == 'Labuan'))"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": {"expr": "zoom_level < 2000 ? 9 : 11"},
+        "color": "black",
+        "fontWeight": "bold",
+        "opacity": {"expr": "zoom_level > 1200 ? 1 : 0"}
+      },
+      "encoding": {
+        "longitude": {"field": "lon_num", "type": "quantitative"},
+        "latitude": {"field": "lat_num", "type": "quantitative"},
+        "text": {"field": "States"}
+      }
+    }
+  ],
+  "config": {
+    "legend": {"labelFontSize": 11, "titleFontSize": 12},
+    "view": {"stroke": "transparent"},
+    "text": {"baseline": "middle"}
+  }
+}

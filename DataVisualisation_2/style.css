@@ -177,3 +177,64 @@ section p {
 .placeholder > div {
   pointer-events: none !important;
 }
+
+/* ===== Number Cards Section ===== */
+.number-cards {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  margin: 0rem auto;
+  flex-wrap: wrap;
+  max-width: 1200px;
+}
+
+.number-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 1.5rem 2rem;
+  width: 250px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.number-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.number-card .region-name {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.number-card .number-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0097e6;
+}
+
+/* Filter Dropdown inside Card */
+.filter {
+  margin-top: 0.6rem;
+}
+
+.filter select {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.filter select:focus {
+  border-color: #0097e6;
+}
+
+body.modal-open {
+      overflow: hidden;
+    }
