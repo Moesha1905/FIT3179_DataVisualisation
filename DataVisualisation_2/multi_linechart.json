@@ -1,13 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 700,
-  "height": 400,
-  "title": {
-    "text": "Tourism Expenditure Trends by Category (2015 - 2022)",
-    "fontSize": 15,
-    "fontWeight": "bold",
-    "anchor": "middle",
-    "color": "#000"
+  "width": "container",
+  "height": "container",
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
   },
   "data": {
     "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/Homework_W10/malaysia_expenditure_share.csv"
