@@ -37,7 +37,7 @@
     <section class="tables">
       <div class="top-country">
         <h3>Multi Line Chart</h3>
-        <p>Compares visitor trends from the top 10 countries over time.</p>
+        <p>Compares tourist expenditure based on category.</p>
         <a href="#multiline-modal" class="placeholder"><div id="vis3"></div></a>
       </div>
 
@@ -96,36 +96,51 @@
 
   <!-- ---------- Vega-Lite Embedding Script ---------- -->
   <script type="text/javascript">
-    const embedOptions = {
-      config: {
-        background: "transparent",
-        view: { stroke: "transparent" }
-      },
-      actions: false,
-      autosize: { type: "fit", contains: "padding" }
-    };
+    // Define your chart links once
+    const vis1 = "LINK_1_HERE";
+    const vis2 = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/sample_vega.json";
+    const vis3 = "LINK_3_HERE";
+    const vis4 = "LINK_4_HERE";
+    const vis5 = "LINK_5_HERE";
+    const vis6 = "LINK_6_HERE";
 
-    // Normal dashboard charts
-    vegaEmbed('#vis1', "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/sample_vega.json", embedOptions);
-    vegaEmbed('#vis2', "LINK_2_HERE", embedOptions);
-    vegaEmbed('#vis3', "LINK_3_HERE", embedOptions);
-    vegaEmbed('#vis4', "LINK_4_HERE", embedOptions);
-    vegaEmbed('#vis5', "LINK_5_HERE", embedOptions);
-    vegaEmbed('#vis6', "LINK_6_HERE", embedOptions);
+    function initCharts() {
+      const embedOptions = {
+        config: {
+          background: "transparent",
+          view: { stroke: "transparent" }
+        },
+        actions: false,
+        autosize: { type: "fit", contains: "padding" }
+      };
 
-    // Fullscreen modals
-    vegaEmbed('#modal-vis1', "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/sample_vega.json", embedOptions);
-    vegaEmbed('#modal-vis2', "LINK_2_HERE", embedOptions);
-    vegaEmbed('#modal-vis3', "LINK_3_HERE", embedOptions);
-    vegaEmbed('#modal-vis4', "LINK_4_HERE", embedOptions);
-    vegaEmbed('#modal-vis5', "LINK_5_HERE", embedOptions);
-    vegaEmbed('#modal-vis6', "LINK_6_HERE", embedOptions);
+      // Embed dashboard + modal charts (reusing variables)
+      vegaEmbed('#vis1', vis1, embedOptions);
+      vegaEmbed('#modal-vis1', vis1, embedOptions);
 
-    // Resize fix when opening/closing modals
-    window.addEventListener('hashchange', () => {
-      window.dispatchEvent(new Event('resize'));
-    });
-    
+      vegaEmbed('#vis2', vis2, embedOptions);
+      vegaEmbed('#modal-vis2', vis2, embedOptions);
+
+      vegaEmbed('#vis3', vis3, embedOptions);
+      vegaEmbed('#modal-vis3', vis3, embedOptions);
+
+      vegaEmbed('#vis4', vis4, embedOptions);
+      vegaEmbed('#modal-vis4', vis4, embedOptions);
+
+      vegaEmbed('#vis5', vis5, embedOptions);
+      vegaEmbed('#modal-vis5', vis5, embedOptions);
+
+      vegaEmbed('#vis6', vis6, embedOptions);
+      vegaEmbed('#modal-vis6', vis6, embedOptions);
+
+      // Resize fix when opening/closing modals
+      window.addEventListener('hashchange', () => {
+        window.dispatchEvent(new Event('resize'));
+      });
+    }
+
+    // Initialize charts when page loads
+    document.addEventListener("DOMContentLoaded", initCharts);
   </script>
 </body>
 </html>

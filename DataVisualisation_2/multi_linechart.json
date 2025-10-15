@@ -1,0 +1,112 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 400,
+  "title": {
+    "text": "Tourism Expenditure Trends by Category (2015 - 2022)",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "anchor": "middle",
+    "color": "#000"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/main/Homework_W10/malaysia_expenditure_share.csv"
+  },
+  "transform": [
+    {
+      "fold": ["Total Tourism expenditure ", "Travel ", "Transport "],
+      "as": ["Category", "Value"]
+    }
+  ],
+  "layer": [
+    {
+      "data": {"values": [{"xStart": "2020", "xEnd": "2021"}]},
+      "mark": {"type": "rect", "color": "#d3d3d3", "opacity": 0.3},
+      "encoding": {
+        "x": {"field": "xStart", "type": "ordinal"},
+        "x2": {"field": "xEnd"}
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "category_highlight",
+          "select": {"type": "point", "fields": ["Category"]},
+          "bind": "legend"
+        }
+      ],
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {"labelAngle": 0}
+        },
+        "y": {
+          "field": "Value",
+          "type": "quantitative",
+          "title": "Expenditure (US$ Millions)"
+        },
+        "color": {
+          "field": "Category",
+          "type": "nominal",
+          "title": "Expenditure Category",
+          "scale": {
+            "domain": ["Total Tourism expenditure ", "Travel ", "Transport "],
+            "range": ["#0034ff", "#e38138", "#0d9e56"]
+          },
+          "legend": {
+            "title": "Category",
+            "orient": "right",
+            "labelFontSize": 12,
+            "titleFontSize": 13
+          }
+        },
+        "opacity": {
+          "condition": {"param": "category_highlight", "value": 1},
+          "value": 0.2
+        },
+        "tooltip": [
+          {"field": "Year", "type": "ordinal"},
+          {"field": "Category", "type": "nominal"},
+          {
+            "field": "Value",
+            "type": "quantitative",
+            "title": "Expenditure (US$ Millions)",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "data": {"values": [{"Year": "2020", "label": "COVID-19 Pandemic"}]},
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "fontWeight": "bold",
+        "color": "gray",
+        "dx": 50,
+        "dy": -350
+      },
+      "encoding": {
+        "x": {"field": "Year", "type": "ordinal"},
+        "y": {"datum": 0},
+        "text": {"field": "label"}
+      }
+    }
+  ],
+  "config": {
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 13
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}

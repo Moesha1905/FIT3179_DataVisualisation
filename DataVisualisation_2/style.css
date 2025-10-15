@@ -68,12 +68,12 @@ header span {
 }
 
 /* Color Themes */
-.map .placeholder {
+.map .placeholder { background: #e0ffe5; color: #20643a; }
+.guest-time .placeholder { 
   background: none;
   color: inherit;
-  border: none;
+  border: none; 
 }
-.guest-time .placeholder { background: #e0ffe5; color: #20643a; }
 .top-country .placeholder { background: #fff2cc; color: #7a5e00; }
 .best-month .placeholder { background: #f3e0ff; color: #5e249d; }
 .slope .placeholder { background: #ffe0e0; color: #992020; }
