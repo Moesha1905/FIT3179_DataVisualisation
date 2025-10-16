@@ -1,12 +1,20 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "width": 700,
-  "height": 600,
-  "autosize": {"type": "fit", "contains": "padding"},
-  "padding": {"bottom": 10, "right": 10, "top": 10},
+  "autosize": {"type": "fit", "contains": "padding", "resize": true},
+  "padding": {"right": 10, "top": 10},
 
   "signals": [
-    {"name": "radius", "update": "min(width, height) / 3"},
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
+    },
+    {
+      "name": "height",
+      "init": "containerSize()[1]",
+      "on": [{"events": "window:resize", "update": "containerSize()[1]"}]
+    },
+    {"name": "radius", "update": "min(width, height) / 2.5"},
     {
       "name": "selected_year",
       "value": "All",
@@ -16,14 +24,8 @@
         "name": "Select Year: "
       }
     },
-    {
-      "name": "centerX",
-      "update": "width / 2" 
-    },
-    {
-      "name": "centerY",
-      "update": "height / 2 - 30"
-    }
+    {"name": "centerX", "update": "width / 2"},
+    {"name": "centerY", "update": "height / 1.9 - 30"}
   ],
 
   "data": [
@@ -208,14 +210,32 @@
     {
       "fill": "color",
       "title": "Year",
-      "orient": "bottom-right",
+      "orient": "top-right",
       "encode": {
-        "title": {
-          "enter": {"fontSize": {"value": 13}, "fontWeight": {"value": "bold"}}
+        "legend": {
+          "enter": {
+            "x": {"signal": "width - 130"},   
+            "y": {"signal": "20"}            
+          }
         },
-        "labels": {"enter": {"fontSize": {"value": 12}}},
-        "symbols": {"enter": {"size": {"value": 90}}}
+        "title": {
+          "enter": {
+            "fontSize": {"value": 12},
+            "fontWeight": {"value": "bold"}
+          }
+        },
+        "labels": {
+          "enter": {
+            "fontSize": {"value": 11}
+          }
+        },
+        "symbols": {
+          "enter": {
+            "size": {"value": 90}
+          }
+        }
       }
     }
   ]
 }
+

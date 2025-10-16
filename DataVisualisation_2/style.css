@@ -22,11 +22,11 @@ header {
 header h1 {
   font-size: 2.2rem;
   font-weight: 800;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   color: #333;
 }
 
-h3{
+h3 {
   font-family: 'Times New Roman', Times, serif;
   font-size: 1.6rem;
   color: #000;
@@ -77,17 +77,9 @@ header span {
 
 /* Color Themes */
 .map .placeholder { background: #e0ffe5; color: #20643a; }
-.guest-time .placeholder { 
-  background: none;
-  color: inherit;
-  border: none; 
-}
-.top-country .placeholder {   
-  background: none;
-  color: inherit;
-  border: none;  }
-
-.best-month .placeholder { background: #f3e0ff; color: #5e249d; }
+.guest-time .placeholder { background: none; color: inherit; border: none; }
+.top-country .placeholder { background: none; color: inherit; border: none; }
+.best-month .placeholder { background: none; color: inherit; border: none; }
 .slope .placeholder { background: #ffe0e0; color: #992020; }
 .radar-section .placeholder { background: #e6f7ff; color: #005f73; }
 
@@ -127,8 +119,8 @@ section p {
   background: #fff;
   border-radius: 16px;
   padding: 1rem;
-  width: 80%;       /* smaller width */
-  height: 80%;      /* smaller height */
+  width: 80%;
+  height: 80%;
   max-width: 1000px;
   max-height: 650px;
   display: flex;
@@ -140,7 +132,7 @@ section p {
 
 #vis1, #vis2, #vis3, #vis4, #vis5, #vis6 {
   width: 100%;
-  height: 350px;
+  height: 400px;
   min-height: 350px;
 }
 
@@ -244,9 +236,9 @@ section p {
 }
 
 body.modal-open {
-      overflow: hidden;
-    }
-  
+  overflow: hidden;
+}
+
 /* Ensure modal and Vega container are relative for positioning */
 #choropleth-modal .vega-embed {
   position: relative;
@@ -255,9 +247,9 @@ body.modal-open {
 /* Move Vega controls right under the legend */
 #choropleth-modal .vega-bindings {
   position: absolute;
-  top: 65%;              /* roughly align vertically with legend */
-  right: -5px;           /* same side as legend */
-  transform: translateY(120%); /* pushes controls below legend */
+  top: 65%;
+  right: -5px;
+  transform: translateY(120%);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -268,7 +260,6 @@ body.modal-open {
   z-index: 10;
 }
 
-/* Optional fine-tuning for alignment */
 #choropleth-modal .vega-bindings label {
   font-weight: 600;
   font-size: 0.85rem;
@@ -285,4 +276,92 @@ body.modal-open {
   border-radius: 5px;
   border: 1px solid #ccc;
   background: #fff;
+}
+
+#modal-vis1, #modal-vis2, #modal-vis3, #modal-vis4, #modal-vis5, #modal-vis6 {
+  width: 100%;
+  height: 80vh;
+  display: block;
+}
+
+/* =========================================================
+    RADAR CHART DROPDOWN & LEGEND ALIGNMENT
+   ========================================================= */
+.radar-chart-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Vega container inside the radar section */
+.radar-chart-container #vis4 {
+  width: 100%;
+  height: 100%;
+}
+
+/* Style the Vega-generated dropdown (signal binding) */
+.radar-chart-container select {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Align Vega signal controls neatly */
+.radar-chart-container .vega-bindings {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+/* Optional: horizontal alignment with legend */
+@media (min-width: 768px) {
+  .radar-chart-container {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+}
+
+/* === RADAR CHART FILTER POSITIONING (INSIDE MODAL) === */
+/* Simplify the Vega dropdown inside the radar modal */
+#radar-modal .vega-bindings {
+  position: absolute;
+  top: 120px;
+  right: 15px;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+#radar-modal .vega-bind label {
+  font-size: 14px;
+  color: #333;
+  margin-right: 6px;
+}
+
+#radar-modal .vega-bind select {
+  font-size: 14px;
+  color: #333;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  padding: 3px 6px;
+  outline: none;
+}
+
+#radar-modal .vega-bind select:focus {
+  border-color: #999;
 }
