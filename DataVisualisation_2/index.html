@@ -114,17 +114,19 @@
     const vis5 = "LINK_5_HERE";
     const vis6 = "LINK_6_HERE";
 
-    // Prevent background scroll when modal opens
+    //  FIXED scroll behavior on modal open/close
     (function() {
-      const scrollPos = { top: 0, left: 0 };
+      let scrollPos = { top: 0, left: 0 };
+      window.history.scrollRestoration = "manual"; // optional smooth fix
       window.addEventListener("hashchange", () => {
-        scrollPos.top = window.scrollY;
-        scrollPos.left = window.scrollX;
-        setTimeout(() => window.scrollTo(scrollPos.left, scrollPos.top), 0);
         if (location.hash.includes("modal")) {
+          // Modal is opening
+          scrollPos = { top: window.scrollY, left: window.scrollX };
           document.body.classList.add("modal-open");
         } else {
+          // Modal is closing - restore scroll
           document.body.classList.remove("modal-open");
+          setTimeout(() => window.scrollTo(scrollPos.left, scrollPos.top), 0);
         }
       });
     })();
