@@ -63,7 +63,7 @@
         "name": "color",
         "type": "linear",
         "domain": [0, 100],
-        "range": ["#aed1e8", "#154360"]
+        "range": ["#aed1e8", "#6faed9", "#154360"]
     }
 ],
 
