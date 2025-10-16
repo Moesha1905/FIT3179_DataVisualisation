@@ -1,7 +1,7 @@
 /* General Layout */
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
+  background: white;
   color: #333;
   margin: 0;
   padding: 0;
@@ -81,7 +81,7 @@ header span {
 .top-country .placeholder { background: none; color: inherit; border: none; }
 .best-month .placeholder { background: none; color: inherit; border: none; }
 .slope .placeholder { background: #ffe0e0; color: #992020; }
-.radar-section .placeholder { background: #e6f7ff; color: #005f73; }
+.radar-section .placeholder {background: none; color: inherit; border: none; }
 
 section p {
   color: #666;

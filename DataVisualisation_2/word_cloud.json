@@ -1,0 +1,110 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Centered word cloud for popup modal (Vega v6 compatible).",
+  "autosize": {"type": "fit", "contains": "padding", "resize": true},
+
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
+    },
+    {
+      "name": "height",
+      "init": "containerSize()[1]",
+      "on": [{"events": "window:resize", "update": "containerSize()[1]"}]
+    }
+  ],
+
+  "padding": 0,
+
+  "data": [
+    {
+      "name": "words",
+      "values": [
+        {"text": "City Sightseeing", "value": 90.9},
+        {"text": "Village Visits", "value": 9.7},
+        {"text": "Islands & Beaches", "value": 26.9},
+        {"text": "Sailing & Yachting", "value": 2.2},
+        {"text": "Scuba Diving", "value": 2.2},
+        {"text": "Snorkeling", "value": 10.6},
+        {"text": "Swimming", "value": 22.0},
+        {"text": "Spa & Wellness", "value": 5.6},
+        {"text": "Medical", "value": 3.7},
+        {"text": "Rafting", "value": 2.4},
+        {"text": "Hiking & Trekking", "value": 6.5},
+        {"text": "Mountain Climbing", "value": 0.7},
+        {"text": "Theme Parks", "value": 18.1},
+        {"text": "Volunteer works", "value": 0.2},
+        {"text": "Religious Sites", "value": 24.9},
+        {"text": "Shopping", "value": 91.2},
+        {"text": "Golf", "value": 0.3},
+        {"text": "Museums", "value": 27.8},
+        {"text": "Cultural Festivals", "value": 11.2},
+        {"text": "Historical Sites", "value": 31.9},
+        {"text": "Sports", "value": 2.2},
+        {"text": "Angling", "value": 0.1},
+        {"text": "Birdwatching", "value": 7.1},
+        {"text": "Cycling", "value": 0.2},
+        {"text": "Cruises", "value": 0.7},
+        {"text": "River Cruise", "value": 4.4},
+        {"text": "Nightlife", "value": 23.4},
+        {"text": "Flying Fox/Abseiling", "value": 2.4},
+        {"text": "Other", "value": 1.0}
+      ],
+      "transform": [
+        {"type": "formula", "as": "angle", "expr": "0"}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+        "name": "color",
+        "type": "linear",
+        "domain": [0, 100],
+        "range": ["#aed1e8", "#154360"]
+    }
+],
+
+  "marks": [
+    {
+      "type": "group",
+      "encode": {
+        "update": {
+          "width": {"signal": "width"},
+          "height": {"signal": "height"}
+        }
+      },
+      "marks": [
+        {
+          "type": "text",
+          "from": {"data": "words"},
+          "transform": [
+            {
+              "type": "wordcloud",
+              "size": [{"signal": "width"}, {"signal": "height"}],
+              "text": {"field": "text"},
+              "rotate": {"field": "angle"},
+              "fontSize": {"field": "datum.value"},
+              "fontSizeRange": [12, 80],
+              "padding": 2
+            }
+          ],
+          "encode": {
+            "enter": {
+              "text": {"field": "text"},
+              "align": {"value": "center"},
+              "baseline": {"value": "alphabetic"},
+              "fill": {"scale": "color", "field": "value"}
+            },
+            "update": {
+              "x": {"signal": "width / 2"},
+              "y": {"signal": "height / 2"}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
