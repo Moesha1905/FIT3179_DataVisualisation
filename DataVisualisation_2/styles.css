@@ -73,10 +73,9 @@ body {
 .viz5 {
   border-radius: 8px;
   padding: 18px;
-  width: 100%; /* Full width of parent row */
+  width: 100%;
   max-width: 1200px;
   margin: 20px auto;
-  min-height: 300px; /* ensure some initial height */
   box-sizing: border-box;
   color: #333;
   font-size: 18px;
@@ -84,11 +83,46 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
 
-  /* Flex removed for content centering to avoid Vega alignment issues */
+  /* Center visualization inside */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Individual placeholder colors */
+/* --- Fix Vega centering once and for all --- */
+.viz1 > div.vega-embed,
+.viz2 > div.vega-embed,
+.viz3 > div.vega-embed,
+.viz4 > div.vega-embed,
+.viz5 > div.vega-embed {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+  width: auto !important;
+  max-width: 100%;
+}
+
+/* Ensure SVGs/canvases inside stay centered */
+.viz1 svg,
+.viz2 svg,
+.viz3 svg,
+.viz4 svg,
+.viz5 svg,
+.viz1 canvas,
+.viz2 canvas,
+.viz3 canvas,
+.viz4 canvas,
+.viz5 canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Individual placeholder colors (optional) --- */
 .viz1 { background-color: #e3f2fd; }
 .viz2 { background-color: #fce4ec; }
 .viz3 { background-color: #e8f5e9; }
@@ -99,16 +133,15 @@ body {
 .viz-row {
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: flex-start;
   width: 95%;
   max-width: 1200px;
   margin: 0 auto 40px;
   gap: 15px;
 }
 
-/* Ensure charts fill the container and don't shift */
 .viz-row > div {
-  flex: 1; /* Each chart takes equal width */
+  flex: 1;
 }
 
 /* --- Responsive Layout --- */
