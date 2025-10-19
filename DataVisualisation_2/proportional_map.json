@@ -2,7 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "width": "container",
   "height": "container",
-  "autosize":"fit",
   "projection": {"type": "equalEarth", "rotate": [0, 0, 0]},
   "params": [
     {
