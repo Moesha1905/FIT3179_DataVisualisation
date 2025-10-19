@@ -31,7 +31,7 @@ body {
   justify-content: center;
   align-items: stretch;
   gap: 15px;
-  width: 95%; /* was 90% */
+  width: 95%;
   max-width: 1200px;
   margin: 20px auto 10px;
 }
@@ -72,15 +72,11 @@ body {
 .viz4,
 .viz5 {
   border-radius: 8px;
-  padding: 18px; /* slightly smaller padding */
-  width: 95%; /* was 90% */
+  padding: 18px;
+  width: 100%; /* Full width of parent row */
   max-width: 1200px;
   margin: 20px auto;
-  min-height: 200px;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 300px; /* ensure some initial height */
   box-sizing: border-box;
   color: #333;
   font-size: 18px;
@@ -88,38 +84,31 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+
+  /* Flex removed for content centering to avoid Vega alignment issues */
 }
+
+/* Individual placeholder colors */
+.viz1 { background-color: #e3f2fd; }
+.viz2 { background-color: #fce4ec; }
+.viz3 { background-color: #e8f5e9; }
+.viz4 { background-color: #fff3e0; }
+.viz5 { background-color: #ede7f6; }
 
 /* --- Row Layout for Side-by-Side Visualizations --- */
 .viz-row {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  width: 95%; /* was 90% */
+  width: 95%;
   max-width: 1200px;
   margin: 0 auto 40px;
-  gap: 15px; /* slightly smaller gap */
+  gap: 15px;
 }
 
-/* Individual placeholder colors */
-.viz1 {
-  background-color: #e3f2fd; /* Light Blue */
-}
-
-.viz2 {
-  background-color: #fce4ec; /* Light Pink */
-}
-
-.viz3 {
-  background-color: #e8f5e9; /* Light Green */
-}
-
-.viz4 {
-  background-color: #fff3e0; /* Light Orange */
-}
-
-.viz5 {
-  background-color: #ede7f6; /* Light Purple */
+/* Ensure charts fill the container and don't shift */
+.viz-row > div {
+  flex: 1; /* Each chart takes equal width */
 }
 
 /* --- Responsive Layout --- */
@@ -137,6 +126,5 @@ body {
 
   .viz-row > div {
     width: 100%;
-    height: auto;
   }
 }

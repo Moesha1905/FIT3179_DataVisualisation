@@ -7,6 +7,11 @@
 
   <!-- External CSS -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Vega & Vega-Lite Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 
 <body>
@@ -33,18 +38,41 @@
   </div>
 
   <!-- Visualization 1 -->
-  <div class="viz1">Viz 1</div>
+  <div class="viz1" id="vis1"></div>
 
   <!-- Visualization 2 and 3 -->
   <div class="viz-row">
-    <div class="viz2">Viz 2</div>
-    <div class="viz3">Viz 3</div>
+    <div class="viz2" id="vis2"></div>
+    <div class="viz3" id="vis3"></div>
   </div>
 
   <!-- Visualization 4 and 5 -->
   <div class="viz-row">
-    <div class="viz4">Viz 4</div>
-    <div class="viz5">Viz 5</div>
+    <div class="viz4" id="vis4"></div>
+    <div class="viz5" id="vis5"></div>
   </div>
+
+  <!-- Vega Embed Scripts -->
+  <script>
+    // ============================
+    // Visualization Link Initialization
+    // ============================
+
+    const vis1Link = "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/proportional_map.json";
+    const vis2Link = "visualizations/vis2.json";
+    const vis3Link = "visualizations/vis3.json";
+    const vis4Link = "visualizations/vis4.json";
+    const vis5Link = "visualizations/vis5.json";
+
+    // ============================
+    // Vega Embeds
+    // ============================
+
+    vegaEmbed('#vis1', vis1Link).then(console.log).catch(console.warn);
+    vegaEmbed('#vis2', vis2Link).then(console.log).catch(console.warn);
+    vegaEmbed('#vis3', vis3Link).then(console.log).catch(console.warn);
+    vegaEmbed('#vis4', vis4Link).then(console.log).catch(console.warn);
+    vegaEmbed('#vis5', vis5Link).then(console.log).catch(console.warn);
+  </script>
 </body>
 </html>
