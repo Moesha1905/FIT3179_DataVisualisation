@@ -1,8 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 1000,
+  "width": 750,
   "height": 600,
-  "projection": {"type": "equalEarth"},
+  "projection": {
+    "type": "equalEarth",
+    "scale": 2500,
+    "center": [115, 4],
+    "translate": [603, 300]
+  },
   "layer": [
     {
       "data": {
@@ -122,6 +127,6 @@
     }
   ],
   "config": {
-    "legend": {"labelFontSize": 11, "titleFontSize": 12, "orient": "right"}
+    "legend": {"labelFontSize": 10, "titleFontSize": 10, "orient": "right", "symbolSize":10}
   }
 }
