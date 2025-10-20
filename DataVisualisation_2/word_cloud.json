@@ -1,21 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "description": "Centered word cloud for popup modal (Vega v6 compatible).",
-  "autosize": {"type": "fit", "contains": "padding", "resize": true},
-
-  "signals": [
-    {
-      "name": "width",
-      "init": "containerSize()[0]",
-      "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
-    },
-    {
-      "name": "height",
-      "init": "containerSize()[1]",
-      "on": [{"events": "window:resize", "update": "containerSize()[1]"}]
-    }
-  ],
-
+  "description": "Word cloud with random rotation and smaller text size (1000x400).",
+  "width": 400,
+  "height": 400,
   "padding": 0,
 
   "data": [
@@ -53,27 +40,31 @@
         {"text": "Other", "value": 1.0}
       ],
       "transform": [
-        {"type": "formula", "as": "angle", "expr": "0"}
+        {
+          "type": "formula",
+          "as": "angle",
+          "expr": "random() * 90 - 45"
+        }
       ]
     }
   ],
 
   "scales": [
     {
-        "name": "color",
-        "type": "linear",
-        "domain": [0, 100],
-        "range": ["#aed1e8", "#6faed9", "#154360"]
+      "name": "color",
+      "type": "linear",
+      "domain": [0, 100],
+      "range": ["#aed1e8", "#6faed9", "#154360"]
     }
-],
+  ],
 
   "marks": [
     {
       "type": "group",
       "encode": {
         "update": {
-          "width": {"signal": "width"},
-          "height": {"signal": "height"}
+          "width": {"value": 1000},
+          "height": {"value": 400}
         }
       },
       "marks": [
@@ -83,11 +74,11 @@
           "transform": [
             {
               "type": "wordcloud",
-              "size": [{"signal": "width"}, {"signal": "height"}],
+              "size": [1000, 400],
               "text": {"field": "text"},
               "rotate": {"field": "angle"},
               "fontSize": {"field": "datum.value"},
-              "fontSizeRange": [12, 80],
+              "fontSizeRange": [8, 50],
               "padding": 2
             }
           ],

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": 300,
+  "height": 300,
+  "data": {
+    "values": [
+      {"category": "2016", "group": "FIRST TIME", "value": 25.2},
+      {"category": "2016", "group": "REPEAT", "value": 74.8},
+      {"category": "2017", "group": "FIRST TIME", "value": 24.9},
+      {"category": "2017", "group": "REPEAT", "value": 75.1},
+      {"category": "2018", "group": "FIRST TIME", "value": 30.1},
+      {"category": "2018", "group": "REPEAT", "value": 69.9},
+      {"category": "2019", "group": "FIRST TIME", "value": 28.8},
+      {"category": "2019", "group": "REPEAT", "value": 71.2}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "category", "type": "nominal", "title": "Year", "axis":{"labelAngle":0, "labelFontSize":10, "titleFontSize":12}},
+    "y": {"field": "value", "type": "quantitative", "title": "Percentage", "axis":{"titleFontSize":12}},
+    "xOffset": {"field": "group"},
+    "color": {
+      "field": "group",
+      "title": "Frequency of Visit",
+      "scale": {
+        "domain": ["FIRST TIME", "REPEAT"],
+        "range": ["#DAA520", "#ff0033"]
+      }
+    },
+    "opacity": {
+      "field": "group",
+      "scale": {
+        "domain": ["FIRST TIME", "REPEAT"],
+        "range": [0.5, 1.0]
+      }
+    },
+    "tooltip": [
+      {"field": "category", "title": "Year:"},
+      {"field": "group", "title": "Frequency of Visit:"},
+      {"field": "value", "title": "Percentage:", "format": ".1f"}
+    ]
+  }
+}

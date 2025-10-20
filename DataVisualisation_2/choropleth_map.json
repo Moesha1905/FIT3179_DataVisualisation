@@ -4,9 +4,9 @@
   "height": 300,
   "projection": {
     "type": "equalEarth",
-    "scale": 2000,
+    "scale": 1990,
     "center": [115, 4],
-    "translate": [700, 150]
+    "translate": [600, 150]
   },
   "layer": [
     {

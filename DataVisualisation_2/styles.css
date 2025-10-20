@@ -121,8 +121,8 @@ header h1 {
   border-radius: 8px;
   background-color: #fafafa;
   display: flex;
-  align-items:start;
-  justify-content: left;
+  align-items:center;
+  justify-content: center;
   color: #aaa;
   font-size: 16px;
 }
@@ -143,4 +143,19 @@ footer {
   .viz-row.two-col {
     grid-template-columns: 1fr;
   }
+}
+
+/* --- Fix Vega Embed Size Consistency --- */
+.vega-embed, .vega-embed > div {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box;
+}
+
+.placeholder {
+  width: 100%;
+  overflow: hidden;
 }

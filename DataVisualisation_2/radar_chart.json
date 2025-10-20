@@ -1,13 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "width": 750,
+  "width": 600,
   "height": 400,
   "padding": 40,
   "autosize": {"type": "none", "contains": "padding"},
   "background": "white",
 
   "signals": [
-    {"name": "radius", "update": "width / 4"}
+    {"name": "radius", "update": "width / 4.5"}
   ],
 
   "data": [
@@ -190,7 +190,7 @@
           "encode": {
             "enter": {
               "path": {
-                "signal": "'M4,1 L-30,-35'"
+                "signal": "'M4,1 L-25,-30'"
               },
               "stroke": {"value": "#800000"},
               "strokeWidth": {"value": 2}
@@ -201,8 +201,8 @@
           "type": "text",
           "encode": {
             "enter": {
-              "x": {"value": -150},
-              "y": {"value": -80},
+              "x": {"value": -155},
+              "y": {"value": -60},
               "text": {"value": ["Malaysia's genuine warmth","and friendliness make","visitors feel at home,"," earning a perfect score"]},
               "fontSize": {"value": 11},
               "fill": {"value": "#800000"},
