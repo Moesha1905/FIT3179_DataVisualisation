@@ -1,23 +1,19 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 1000,
-  "height": 500,
+  "height": 300,
   "projection": {"type": "equalEarth", "rotate": [0, 0, 0]},
   "params": [
-    {
-      "name": "year_select",
-      "value": 2019
-      }
-    ,
+    {"name": "year_select", "value": 2019},
     {
       "name": "state_select",
       "value": "KUALA LUMPUR",
       "bind": {
         "input": "select",
         "options": [
-          "PUTRAJAYA", "PENANG", "PERAK", "NEGERI SEMBILAN", "MELAKA",
-          "JOHOR", "PAHANG", "TERENGGANU", "KELANTAN", "SARAWAK",
-          "SABAH", "LABUAN", "KUALA LUMPUR", "SELANGOR", "KEDAH", "PERLIS"
+          "PUTRAJAYA","PENANG","PERAK","NEGERI SEMBILAN","MELAKA",
+          "JOHOR","PAHANG","TERENGGANU","KELANTAN","SARAWAK",
+          "SABAH","LABUAN","KUALA LUMPUR","SELANGOR","KEDAH","PERLIS"
         ],
         "name": "Select Visited State: "
       }
@@ -29,7 +25,7 @@
         "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/ocean.json",
         "format": {"type": "topojson", "feature": "ne_10m_ocean"}
       },
-      "mark": {"type": "geoshape", "fill": "#99ccff"}
+      "mark": {"type": "geoshape", "fill": "#bcdeff"}
     },
     {
       "data": {"graticule": true},
@@ -51,17 +47,88 @@
           "filter": "datum.Year == year_select && datum.State == state_select && datum.Country != 'TOTAL'"
         }
       ],
-      "mark": {"type": "circle", "opacity": 0.4, "stroke": "#333", "strokeWidth": 0.5},
+      "mark": {
+        "type": "circle",
+        "opacity": 0.4,
+        "stroke": "#333",
+        "strokeWidth": 0.5,
+        "fill": "red",
+        "fillOpacity": 0.4
+      },
       "encoding": {
         "longitude": {"field": "Longitude", "type": "quantitative"},
-        "latitude": {"field": "Latitude ", "type": "quantitative"},
-        "size": {"field": "Percentage", "type": "quantitative", "scale": {"range": [50, 1000]}},
-        "color": {"field": "Percentage", "type": "quantitative", "scale": {"scheme": "reds"}},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {
+          "field": "Percentage",
+          "type": "quantitative",
+          "scale": {"range": [20, 1000]}
+        },
         "tooltip": [
-          {"field": "Percentage", "type": "quantitative", "title": "Percentage of Tourist:"},
-          {"field": "Country", "type": "nominal","title":"Country:"}
+          {"field": "Country", "title": "Country"},
+          {"field": "Percentage", "title": "Percentage of Tourists"}
         ]
       }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/state_visited.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.Year == year_select && datum.State == state_select && datum.Country != 'TOTAL'"
+        },
+        {
+          "calculate": "toNumber(datum.Percentage)",
+          "as": "pct"
+        },
+        {
+          "window": [
+            {"op": "rank", "as": "rank"},
+            {"op": "max", "field": "pct", "as": "maxPct"}
+          ],
+          "sort": [{"field": "pct", "order": "descending"}]
+        },
+        {"filter": "datum.rank == 1"},
+        {
+          "calculate": "datum.Longitude + 6",
+          "as": "x2"
+        },
+        {
+          "calculate": "datum['Latitude'] + 6",
+          "as": "y2"
+        },
+        {
+          "calculate": "datum.Country + ' - ' + format(datum.pct, '.1f') + '%'",
+          "as": "label"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "black", "strokeWidth": 1},
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "longitude2": {"field": "x2"},
+            "latitude2": {"field": "y2"}
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 6,
+            "dy": -6,
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "black"
+          },
+          "encoding": {
+            "longitude": {"field": "x2", "type": "quantitative"},
+            "latitude": {"field": "y2", "type": "quantitative"},
+            "text": {"field": "label", "type": "nominal"}
+          }
+        }
+      ]
     }
   ]
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
   "width": 750,
-  "height": 500,
+  "height": 400,
   "padding": 40,
   "autosize": {"type": "none", "contains": "padding"},
   "background": "white",
 
   "signals": [
-    {"name": "radius", "update": "width / 3.5"}
+    {"name": "radius", "update": "width / 4"}
   ],
 
   "data": [

@@ -121,8 +121,8 @@ header h1 {
   border-radius: 8px;
   background-color: #fafafa;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items:start;
+  justify-content: left;
   color: #aaa;
   font-size: 16px;
 }
