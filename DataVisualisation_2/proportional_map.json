@@ -1,6 +1,6 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "width": 850,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
   "height": 500,
   "projection": {"type": "equalEarth", "rotate": [0, 0, 0]},
   "params": [
@@ -25,7 +25,7 @@
           "JOHOR", "PAHANG", "TERENGGANU", "KELANTAN", "SARAWAK",
           "SABAH", "LABUAN", "KUALA LUMPUR", "SELANGOR", "KEDAH", "PERLIS"
         ],
-        "name": "Select State: "
+        "name": "Select Visited State: "
       }
     }
   ],

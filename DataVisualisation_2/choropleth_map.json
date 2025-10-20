@@ -1,12 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 750,
-  "height": 600,
+  "width": 1000,
+  "height": 500,
   "projection": {
     "type": "equalEarth",
-    "scale": 2500,
+    "scale": 3000,
     "center": [115, 4],
-    "translate": [603, 300]
+    "translate": [800, 250]
   },
   "layer": [
     {
@@ -46,7 +46,7 @@
           "scale": {
             "type": "threshold",
             "domain": [15, 30, 45, 60, 75],
-            "scheme": "blues"
+            "scheme": "reds"
           },
           "title": "Percentage of Tourists"
         },
@@ -58,75 +58,57 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/Homework_W9/malaysia_majcities.json",
-        "format": {"type": "topojson", "feature": "ne_10m_populated_places"}
-      },
-      "transform": [
-        {
-          "filter": "(datum.properties.FEATURECLA == 'Admin-1 capital') || (datum.properties.ADM0CAP == 1 && datum.properties.ADM1NAME != 'Selangor')"
-        },
-        {
-          "calculate": "datum.properties.ADM0CAP == 1 ? 2 : (datum.properties.FEATURECLA == 'Admin-1 capital' ? 1 : 0)",
-          "as": "rankScore"
-        },
-        {
-          "window": [{"op": "row_number", "as": "rownum"}],
-          "groupby": ["properties.ADM1NAME"],
-          "sort": [
-            {"field": "rankScore", "order": "descending"},
-            {"field": "properties.POP_MAX", "order": "descending"}
-          ]
-        },
-        {"filter": "datum.rownum == 1"}
-      ],
-      "mark": {"type": "point", "color": "red", "size": 90},
-      "encoding": {
-        "longitude": {"field": "properties.LONGITUDE"},
-        "latitude": {"field": "properties.LATITUDE"},
-        "tooltip": [
-          {"field": "properties.NAME", "title": "Capital City"},
-          {"field": "properties.ADM1NAME", "title": "State"}
+        "values": [
+          {
+            "x1": 101.6869,
+            "y1": 3.139,
+            "x2": 103.5,
+            "y2": 6
+          }
         ]
+      },
+      "mark": {
+        "type": "rule",
+        "stroke": "#bbbbbb",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "longitude": {"field": "x1"},
+        "latitude": {"field": "y1"},
+        "longitude2": {"field": "x2"},
+        "latitude2": {"field": "y2"}
       }
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/Homework_W9/malaysia_majcities.json",
-        "format": {"type": "topojson", "feature": "ne_10m_populated_places"}
+        "values": [
+          {
+            "note": ["Kuala Lumpur has the highest tourist proportion,", "with its vast number of Tourist Attractions"],
+            "longitude": 103.5,
+            "latitude": 6
+          }
+        ]
       },
-      "transform": [
-        {
-          "filter": "(datum.properties.FEATURECLA == 'Admin-1 capital') || (datum.properties.ADM0CAP == 1 && datum.properties.ADM1NAME != 'Selangor')"
-        },
-        {
-          "calculate": "datum.properties.ADM0CAP == 1 ? 2 : (datum.properties.FEATURECLA == 'Admin-1 capital' ? 1 : 0)",
-          "as": "rankScore"
-        },
-        {
-          "window": [{"op": "row_number", "as": "rownum"}],
-          "groupby": ["properties.ADM1NAME"],
-          "sort": [
-            {"field": "rankScore", "order": "descending"},
-            {"field": "properties.POP_MAX", "order": "descending"}
-          ]
-        },
-        {"filter": "datum.rownum == 1"}
-      ],
       "mark": {
         "type": "text",
-        "dy": -10,
-        "fontSize": 10,
-        "color": "black",
-        "fontWeight": "bold"
+        "align": "left",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#222"
       },
       "encoding": {
-        "longitude": {"field": "properties.LONGITUDE"},
-        "latitude": {"field": "properties.LATITUDE"},
-        "text": {"field": "properties.NAME"}
+        "longitude": {"field": "longitude"},
+        "latitude": {"field": "latitude"},
+        "text": {"field": "note"}
       }
     }
   ],
   "config": {
-    "legend": {"labelFontSize": 10, "titleFontSize": 10, "orient": "right", "symbolSize":10}
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 10,
+      "orient": "right",
+      "symbolSize": 10
+    }
   }
 }

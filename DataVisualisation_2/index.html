@@ -37,42 +37,38 @@
     </div>
   </div>
 
-  <!-- Visualization 1 -->
-  <div class="viz1" id="vis1"></div>
+  <!-- Full-width Visualization 1 -->
+  <div class="viz-container">
+    <div class="viz1" id="vis1"></div>
+  </div>
 
-  <!-- Visualization 2 and 3 -->
+  <!-- Side-by-side Visualizations 2 and 3 -->
   <div class="viz-row">
     <div class="viz2" id="vis2"></div>
     <div class="viz3" id="vis3"></div>
   </div>
 
-  <!-- Visualization 4 and 5 -->
+  <!-- Side-by-side Visualizations 4 and 5 -->
   <div class="viz-row">
     <div class="viz4" id="vis4"></div>
     <div class="viz5" id="vis5"></div>
   </div>
 
-  <!-- Vega Embed Scripts -->
+  <!-- Vega Initialization Script -->
   <script>
-    // ============================
-    // Visualization Link Initialization
-    // ============================
+    window.onload = function() {
+      const spec1 = "./proportional_map.json";
+      const spec2 = "charts/vis2.json";
+      const spec3 = "charts/vis3.json";
+      const spec4 = "charts/vis4.json";
+      const spec5 = "charts/vis5.json";
 
-    const vis1Link = "./proportional_map.json";
-    const vis2Link = "visualizations/vis2.json";
-    const vis3Link = "visualizations/vis3.json";
-    const vis4Link = "visualizations/vis4.json";
-    const vis5Link = "visualizations/vis5.json";
-
-    // ============================
-    // Vega Embeds
-    // ============================
-
-    vegaEmbed('#vis1', vis1Link).then(console.log).catch(console.warn);
-    vegaEmbed('#vis2', vis2Link).then(console.log).catch(console.warn);
-    vegaEmbed('#vis3', vis3Link).then(console.log).catch(console.warn);
-    vegaEmbed('#vis4', vis4Link).then(console.log).catch(console.warn);
-    vegaEmbed('#vis5', vis5Link).then(console.log).catch(console.warn);
+      vegaEmbed("#vis1", spec1);
+      vegaEmbed("#vis2", spec2);
+      vegaEmbed("#vis3", spec3);
+      vegaEmbed("#vis4", spec4);
+      vegaEmbed("#vis5", spec5);
+    };
   </script>
 </body>
 </html>
