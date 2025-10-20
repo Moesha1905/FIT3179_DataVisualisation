@@ -106,7 +106,7 @@
   "config": {
     "legend": {
       "labelFontSize": 10,
-      "titleFontSize": 10,
+      "titleFontSize": 11,
       "orient": "right",
       "symbolSize": 10
     }

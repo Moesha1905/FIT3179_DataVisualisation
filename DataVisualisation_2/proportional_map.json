@@ -6,15 +6,9 @@
   "params": [
     {
       "name": "year_select",
-      "value": 2016,
-      "bind": {
-        "input": "range",
-        "min": 2016,
-        "max": 2019,
-        "step": 1,
-        "name": "Select Year: "
+      "value": 2019
       }
-    },
+    ,
     {
       "name": "state_select",
       "value": "KUALA LUMPUR",

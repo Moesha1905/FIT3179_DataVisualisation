@@ -24,18 +24,17 @@
     <!-- === NUMBER CARDS SECTION === -->
     <section class="number-cards">
       <div class="number-card">
-        <div class="region-name">Tourist Arrivals</div>
+        <div class="region-name">Total Arrivals</div>
         <div id="arrivalsValue" class="number-value"></div>
       </div>
 
       <div class="number-card">
-        <div class="region-name">Tourist Spendings</div>
+        <div class="region-name">Total Spendings</div>
         <div id="receiptsValue" class="number-value"></div>
       </div>
 
       <div class="number-card">
-        <label for="yearSelect" style="display:block; margin-bottom:6px; font-size:0.9em; color:#555;">
-          Select Year
+        <label for="yearSelect" style="display:block; margin-bottom:6px; font-size:0.9em;">
         </label>
         <select id="yearSelect" class="year-dropdown"></select>
       </div>
@@ -102,7 +101,6 @@
   <!-- === TOURISM DATA SCRIPT (Number Cards) === -->
   <script>
     async function loadTourismData() {
-      // Fallback data in case CSV can't be loaded
       let data = [
         { Year: "2016", TotalReceipts: 19682000000, TotalArrivals: 26757000 },
         { Year: "2017", TotalReceipts: 20311000000, TotalArrivals: 25948000 },
@@ -115,13 +113,12 @@
         if (response.ok) {
           const csvText = await response.text();
           const rows = csvText.trim().split("\n").map(r => r.split(","));
-          rows.shift(); // remove header
+          rows.shift();
           data = rows.map(r => ({
             Year: r[0],
             TotalReceipts: Number(r[1]),
             TotalArrivals: Number(r[2])
           }));
-          console.log("Loaded CSV data:", data);
         } else {
           console.warn("CSV not found, using fallback data.");
         }
@@ -133,7 +130,6 @@
       const arrivalsValue = document.getElementById("arrivalsValue");
       const receiptsValue = document.getElementById("receiptsValue");
 
-      // Populate dropdown
       data.forEach(d => {
         const opt = document.createElement("option");
         opt.value = d.Year;
@@ -153,13 +149,19 @@
         }
       }
 
-      // Default to latest year
       const latest = data[data.length - 1].Year;
       yearSelect.value = latest;
       updateValues(latest);
 
-      // Change listener
-      yearSelect.addEventListener("change", e => updateValues(e.target.value));
+      // Event listener stays here - map update added later
+      yearSelect.addEventListener("change", e => {
+        const year = e.target.value;
+        updateValues(year);
+        // If proportional map view exists, update it
+        if (window.vegaViews && window.vegaViews["viz1"]) {
+          window.vegaViews["viz1"].signal("year_select", +year).runAsync();
+        }
+      });
     }
 
     loadTourismData();
@@ -168,7 +170,6 @@
   <!-- === VEGA EMBEDDING SCRIPT === -->
   <script>
     const embedOptions = { actions: false };
-
     const visPaths = {
       viz1: "./proportional_map.json",
       viz2: "./choropleth_map.json",
@@ -178,12 +179,17 @@
       viz6: "./travel_purpose.json"
     };
 
+    // Store Vega views for later updates
+    window.vegaViews = {};
+
     async function embedVis(id, url) {
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to fetch ${url}`);
         const spec = await response.json();
-        await vegaEmbed(id, spec, embedOptions);
+
+        const result = await vegaEmbed(id, spec, embedOptions);
+        window.vegaViews[id.replace("#", "")] = result.view;
       } catch (error) {
         console.error(`Error embedding ${url}:`, error);
       }
