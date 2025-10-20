@@ -1,9 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "description": "Word cloud with random rotation and smaller text size (1000x400).",
-  "width": 400,
-  "height": 400,
-  "padding": 0,
+  "description": "Stable word cloud that stays within boundaries (Vega v6 valid).",
+  "width": 600,
+  "height": 300,
+  "padding": 10,
+  "background": "white",
 
   "data": [
     {
@@ -40,11 +41,8 @@
         {"text": "Other", "value": 1.0}
       ],
       "transform": [
-        {
-          "type": "formula",
-          "as": "angle",
-          "expr": "random() * 90 - 45"
-        }
+        {"type": "collect", "sort": {"field": "text"}},
+        {"type": "formula", "as": "angle", "expr": "datum.index % 2 == 0 ? 0 : 90"}
       ]
     }
   ],
@@ -54,7 +52,7 @@
       "name": "color",
       "type": "linear",
       "domain": [0, 100],
-      "range": ["#aed1e8", "#6faed9", "#154360"]
+      "range": ["#ed9d9d", "#c95f5f", "#7b0f0f"]
     }
   ],
 
@@ -63,8 +61,8 @@
       "type": "group",
       "encode": {
         "update": {
-          "width": {"value": 1000},
-          "height": {"value": 400}
+          "width": {"signal": "width"},
+          "height": {"signal": "height"}
         }
       },
       "marks": [
@@ -74,12 +72,12 @@
           "transform": [
             {
               "type": "wordcloud",
-              "size": [1000, 400],
+              "size": [{"signal": "width"}, {"signal": "height"}],
               "text": {"field": "text"},
               "rotate": {"field": "angle"},
               "fontSize": {"field": "datum.value"},
-              "fontSizeRange": [8, 50],
-              "padding": 2
+              "fontSizeRange": [10, 40],
+              "padding": 3
             }
           ],
           "encode": {
@@ -87,11 +85,8 @@
               "text": {"field": "text"},
               "align": {"value": "center"},
               "baseline": {"value": "alphabetic"},
-              "fill": {"scale": "color", "field": "value"}
-            },
-            "update": {
-              "x": {"signal": "width / 2"},
-              "y": {"signal": "height / 2"}
+              "fill": {"scale": "color", "field": "value"},
+              "tooltip": {"signal": "'Percentage of Tourists: ' + format(datum.value, '.1f') + '%'"}
             }
           }
         }
