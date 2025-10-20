@@ -1,85 +1,42 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "autosize": {"type": "fit", "contains": "padding", "resize": true},
-  "padding": {"right": 10, "top": 10},
+  "width": 750,
+  "height": 500,
+  "padding": 40,
+  "autosize": {"type": "none", "contains": "padding"},
+  "background": "white",
 
   "signals": [
-    {
-      "name": "width",
-      "init": "containerSize()[0]",
-      "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
-    },
-    {
-      "name": "height",
-      "init": "containerSize()[1]",
-      "on": [{"events": "window:resize", "update": "containerSize()[1]"}]
-    },
-    {"name": "radius", "update": "min(width, height) / 2.5"},
-    {
-      "name": "selected_year",
-      "value": "All",
-      "bind": {
-        "input": "select",
-        "options": ["All", 2018, 2019, 2020, 2021],
-        "name": "Select Year: "
-      }
-    },
-    {"name": "centerX", "update": "width / 2"},
-    {"name": "centerY", "update": "height / 1.9 - 30"}
+    {"name": "radius", "update": "width / 3.5"}
   ],
 
   "data": [
     {
       "name": "table",
       "values": [
-        {"Products": "Accommodation", "Year": 2018, "Value": 23.23},
-        {"Products": "Accommodation", "Year": 2019, "Value": 23.42},
-        {"Products": "Accommodation", "Year": 2020, "Value": 23.45},
-        {"Products": "Accommodation", "Year": 2021, "Value": 23.47},
-
-        {"Products": "Food & Beverage", "Year": 2018, "Value": 12.11},
-        {"Products": "Food & Beverage", "Year": 2019, "Value": 12.26},
-        {"Products": "Food & Beverage", "Year": 2020, "Value": 14.23},
-        {"Products": "Food & Beverage", "Year": 2021, "Value": 16.59},
-
-        {"Products": "Transport", "Year": 2018, "Value": 15.74},
-        {"Products": "Transport", "Year": 2019, "Value": 16.45},
-        {"Products": "Transport", "Year": 2020, "Value": 17.14},
-        {"Products": "Transport", "Year": 2021, "Value": 54.05},
-
-        {"Products": "Travel Agencies", "Year": 2018, "Value": 3.98},
-        {"Products": "Travel Agencies", "Year": 2019, "Value": 4.13},
-        {"Products": "Travel Agencies", "Year": 2020, "Value": 4.12},
-        {"Products": "Travel Agencies", "Year": 2021, "Value": 0.19},
-
-        {"Products": "Culture & Recreation", "Year": 2018, "Value": 2.43},
-        {"Products": "Culture & Recreation", "Year": 2019, "Value": 2.58},
-        {"Products": "Culture & Recreation", "Year": 2020, "Value": 2.80},
-        {"Products": "Culture & Recreation", "Year": 2021, "Value": 2.89},
-
-        {"Products": "Auto Fuel", "Year": 2018, "Value": 0.63},
-        {"Products": "Auto Fuel", "Year": 2019, "Value": 0.48},
-        {"Products": "Auto Fuel", "Year": 2020, "Value": 0.17},
-        {"Products": "Auto Fuel", "Year": 2021, "Value": 0.00},
-
-        {"Products": "Tourism Goods", "Year": 2018, "Value": 30.20},
-        {"Products": "Tourism Goods", "Year": 2019, "Value": 30.53},
-        {"Products": "Tourism Goods", "Year": 2020, "Value": 33.38},
-        {"Products": "Tourism Goods", "Year": 2021, "Value": 3.88},
-
-        {"Products": "Tourism Services", "Year": 2018, "Value": 2.94},
-        {"Products": "Tourism Services", "Year": 2019, "Value": 2.45},
-        {"Products": "Tourism Services", "Year": 2020, "Value": 2.86},
-        {"Products": "Tourism Services", "Year": 2021, "Value": 0.97}
-      ],
-      "transform": [
-        {"type": "filter", "expr": "selected_year == 'All' || datum.Year == selected_year"}
+        {"key": "Attractions & Culture", "value": 76, "category": 0},
+        {"key": "Entertainment & Atmosphere", "value": 0, "category": 0},
+        {"key": "Shopping & Goods", "value": 28, "category": 0},
+        {"key": "Food & Dining", "value": 92, "category": 0},
+        {"key": "Facilities & Accommodation", "value": 44, "category": 0},
+        {"key": "Transport", "value": 10, "category": 0},
+        {"key": "Safety & Hygiene", "value": 18, "category": 0},
+        {"key": "People & Hospitality", "value": 100, "category": 0}
       ]
     },
     {
       "name": "keys",
       "source": "table",
-      "transform": [{"type": "aggregate", "groupby": ["Products"]}]
+      "transform": [{"type": "aggregate", "groupby": ["key"]}]
+    },
+    {
+      "name": "annotation",
+      "values": [
+        {
+          "key": "People & Hospitality",
+          "note": "100% satisfaction - visitors praised locals' warmth and helpfulness!"
+        }
+      ]
     }
   ],
 
@@ -89,7 +46,7 @@
       "type": "point",
       "range": {"signal": "[-PI, PI]"},
       "padding": 0.5,
-      "domain": {"data": "table", "field": "Products"}
+      "domain": {"data": "table", "field": "key"}
     },
     {
       "name": "radial",
@@ -97,145 +54,165 @@
       "range": {"signal": "[0, radius]"},
       "zero": true,
       "nice": false,
-      "domain": {"data": "table", "field": "Value"},
+      "domain": [0, 100],
       "domainMin": 0
     },
     {
       "name": "color",
       "type": "ordinal",
-      "domain": [2018, 2019, 2020, 2021],
-      "range": ["#6d4c41", "#7b1fa2", "#c2185b", "#8b0000"]
+      "domain": {"data": "table", "field": "category"},
+      "range": {"scheme": "reds"}
     }
   ],
+
+  "encode": {
+    "enter": {
+      "x": {"signal": "radius + 130"},
+      "y": {"signal": "radius + -5"}
+    }
+  },
 
   "marks": [
     {
       "type": "group",
-      "encode": {
-        "enter": {"x": {"signal": "centerX"}, "y": {"signal": "centerY"}}
-      },
+      "name": "categories",
+      "zindex": 1,
+      "from": {"facet": {"data": "table", "name": "facet", "groupby": ["category"]}},
       "marks": [
         {
-          "type": "group",
-          "name": "categories",
-          "zindex": 2,
-          "from": {"facet": {"data": "table", "name": "facet", "groupby": ["Year"]}},
-          "marks": [
-            {
-              "type": "line",
-              "from": {"data": "facet"},
-              "encode": {
-                "enter": {
-                  "interpolate": {"value": "linear-closed"},
-                  "x": {
-                    "signal": "scale('radial', datum.Value) * cos(scale('angular', datum.Products))"
-                  },
-                  "y": {
-                    "signal": "scale('radial', datum.Value) * sin(scale('angular', datum.Products))"
-                  },
-                  "stroke": {"scale": "color", "field": "Year"},
-                  "strokeWidth": {"value": 2},
-                  "strokeOpacity": {"value": 0.4},
-                  "fill": {"scale": "color", "field": "Year"},
-                  "fillOpacity": {"value": 0.06},
-                  "tooltip": {
-                    "signal": "{'Product': datum.Products, 'Year': datum.Year, 'Percentage': format(datum.Value, ',.2f')}"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "rule",
-          "name": "radial-grid",
-          "from": {"data": "keys"},
-          "zindex": 0,
-          "encode": {
-            "enter": {
-              "x": {"value": 0},
-              "y": {"value": 0},
-              "x2": {"signal": "radius * cos(scale('angular', datum.Products))"},
-              "y2": {"signal": "radius * sin(scale('angular', datum.Products))"},
-              "stroke": {"value": "#ccc"},
-              "strokeWidth": {"value": 1}
-            }
-          }
-        },
-        {
           "type": "line",
-          "name": "outer-line",
-          "from": {"data": "keys"},
-          "zindex": 1,
+          "name": "category-line",
+          "from": {"data": "facet"},
           "encode": {
             "enter": {
               "interpolate": {"value": "linear-closed"},
-              "x": {"signal": "radius * cos(scale('angular', datum.Products))"},
-              "y": {"signal": "radius * sin(scale('angular', datum.Products))"},
-              "stroke": {"value": "#ccc"},
-              "strokeWidth": {"value": 1}
+              "x": {"signal": "scale('radial', datum.value) * cos(scale('angular', datum.key))"},
+              "y": {"signal": "scale('radial', datum.value) * sin(scale('angular', datum.key))"},
+              "stroke": {"scale": "color", "field": "category"},
+              "strokeWidth": {"value": 1},
+              "fill": {"scale": "color", "field": "category"},
+              "fillOpacity": {"value": 0.10}
             }
           }
         },
         {
           "type": "text",
-          "name": "product-label",
-          "from": {"data": "keys"},
-          "zindex": 3,
+          "name": "value-text",
+          "from": {"data": "category-line"},
           "encode": {
             "enter": {
-              "x": {"signal": "(radius + 12) * cos(scale('angular', datum.Products))"},
-              "y": {"signal": "(radius + 12) * sin(scale('angular', datum.Products))"},
-              "text": {"field": "Products"},
-              "align": [
-                {"test": "abs(scale('angular', datum.Products)) > PI / 2", "value": "right"},
-                {"value": "left"}
-              ],
-              "baseline": [
-                {"test": "scale('angular', datum.Products) > 0", "value": "top"},
-                {"test": "scale('angular', datum.Products) == 0", "value": "middle"},
-                {"value": "bottom"}
-              ],
+              "x": {"signal": "datum.x"},
+              "y": {"signal": "datum.y"},
+              "text": {"signal": "format(datum.datum.value, '.0f')"},
+              "align": {"value": "center"},
+              "baseline": {"value": "middle"},
+              "fontSize": {"value": 14},
+              "fontWeight": {"value": "bold"},
               "fill": {"value": "black"},
-              "fontSize": {"value": 12},
-              "fontWeight": {"value": "bold"}
+              "tooltip": {
+                "signal": "{'Category:': datum.datum.key, 'Satisfaction Percentage:': datum.datum.value}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "rule",
+      "name": "radial-grid",
+      "from": {"data": "keys"},
+      "zindex": 0,
+      "encode": {
+        "enter": {
+          "x": {"value": 0},
+          "y": {"value": 0},
+          "x2": {"signal": "radius * cos(scale('angular', datum.key))"},
+          "y2": {"signal": "radius * sin(scale('angular', datum.key))"},
+          "stroke": {"value": "lightgray"},
+          "strokeWidth": {"value": 1}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "name": "key-label",
+      "from": {"data": "keys"},
+      "zindex": 1,
+      "encode": {
+        "enter": {
+          "x": {"signal": "(radius + 10) * cos(scale('angular', datum.key))"},
+          "y": {"signal": "(radius + 10) * sin(scale('angular', datum.key))"},
+          "text": {"field": "key"},
+          "align": [
+            {"test": "abs(scale('angular', datum.key)) > PI / 2", "value": "right"},
+            {"value": "left"}
+          ],
+          "baseline": [
+            {"test": "scale('angular', datum.key) > 0", "value": "top"},
+            {"test": "scale('angular', datum.key) == 0", "value": "middle"},
+            {"value": "bottom"}
+          ],
+          "fill": {"value": "black"},
+          "fontSize": {"value": 14},
+          "fontWeight": {"value": "bold"}
+        }
+      }
+    },
+    {
+      "type": "line",
+      "name": "outer-line",
+      "from": {"data": "radial-grid"},
+      "encode": {
+        "enter": {
+          "interpolate": {"value": "linear-closed"},
+          "x": {"field": "x2"},
+          "y": {"field": "y2"},
+          "stroke": {"value": "lightgray"},
+          "strokeWidth": {"value": 1}
+        }
+      }
+    },
+
+   
+    {
+      "type": "group",
+      "name": "annotation-group",
+      "from": {"data": "annotation"},
+      "encode": {
+        "enter": {
+          "x": {"signal": "scale('radial', 100) * cos(scale('angular', datum.key))"},
+          "y": {"signal": "scale('radial', 100) * sin(scale('angular', datum.key))"}
+        }
+      },
+      "marks": [
+        {
+          "type": "path",
+          "encode": {
+            "enter": {
+              "path": {
+                "signal": "'M4,1 L-30,-35'"
+              },
+              "stroke": {"value": "#800000"},
+              "strokeWidth": {"value": 2}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": {"value": -150},
+              "y": {"value": -80},
+              "text": {"value": ["Malaysia's genuine warmth","and friendliness make","visitors feel at home,"," earning a perfect score"]},
+              "fontSize": {"value": 11},
+              "fill": {"value": "#800000"},
+              "fontWeight": {"value": "bold"},
+              "align": {"value": "left"},
+              "baseline": {"value": "bottom"}
             }
           }
         }
       ]
     }
-  ],
-
-  "legends": [
-    {
-      "fill": "color",
-      "title": "Year",
-      "orient": "top-right",
-      "encode": {
-        "legend": {
-          "enter": {
-            "x": {"signal": "width - 130"},   
-            "y": {"signal": "20"}            
-          }
-        },
-        "title": {
-          "enter": {
-            "fontSize": {"value": 12},
-            "fontWeight": {"value": "bold"}
-          }
-        },
-        "labels": {
-          "enter": {
-            "fontSize": {"value": 11}
-          }
-        },
-        "symbols": {
-          "enter": {
-            "size": {"value": 90}
-          }
-        }
-      }
-    }
   ]
 }
-
