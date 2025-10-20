@@ -25,17 +25,19 @@
     <section class="number-cards">
       <div class="number-card">
         <div class="region-name">Tourist Arrivals</div>
-        <div class="number-value">26,100,000</div>
+        <div id="arrivalsValue" class="number-value"></div>
       </div>
 
       <div class="number-card">
         <div class="region-name">Tourist Spendings</div>
-        <div class="number-value">RM 82.17 B</div>
+        <div id="receiptsValue" class="number-value"></div>
       </div>
 
       <div class="number-card">
-        <div class="region-name">Regions Covered</div>
-        <div class="number-value">8</div>
+        <label for="yearSelect" style="display:block; margin-bottom:6px; font-size:0.9em; color:#555;">
+          Select Year
+        </label>
+        <select id="yearSelect" class="year-dropdown"></select>
       </div>
     </section>
 
@@ -54,9 +56,9 @@
         <h3>Choropleth Map</h3>
         <p>Shows intensity of arrivals by region.</p>
         <div id="viz2" class="placeholder"></div>
-            <p style="font-style: italic; font-size: 0.9em; color: #777; margin-top: 6px;">
-                Note: This visualisation focuses on the latest available year of data (2019).
-            </p>
+        <p style="font-style: italic; font-size: 0.9em; color: #777; margin-top: 6px;">
+          Note: This visualisation focuses on the latest available year of data (2019).
+        </p>
       </div>
     </section>
 
@@ -97,22 +99,89 @@
     Data Sources: <strong>OpenDOSM, Kaggle, Tourism Malaysia Statistics</strong>.
   </footer>
 
-  <!-- === Vega-Lite Embedding Script === -->
+  <!-- === TOURISM DATA SCRIPT (Number Cards) === -->
   <script>
-    // URLs to your Vega-Lite JSON specs
-    const vis1 = "./proportional_map.json";
-    const vis2 = "./choropleth_map.json";
-    const vis3 = ".";
-    const vis4 = ".";
-    const vis5 = "LINK_5_HERE";
-    const vis6 = ".";
+    async function loadTourismData() {
+      // Fallback data in case CSV can't be loaded
+      let data = [
+        { Year: "2016", TotalReceipts: 19682000000, TotalArrivals: 26757000 },
+        { Year: "2017", TotalReceipts: 20311000000, TotalArrivals: 25948000 },
+        { Year: "2018", TotalReceipts: 21775000000, TotalArrivals: 25832000 },
+        { Year: "2019", TotalReceipts: 22200000000, TotalArrivals: 26101000 }
+      ];
 
-    const embedOptions = { actions: false }; // optional: hides menu buttons
+      try {
+        const response = await fetch("./tourism_data.csv");
+        if (response.ok) {
+          const csvText = await response.text();
+          const rows = csvText.trim().split("\n").map(r => r.split(","));
+          rows.shift(); // remove header
+          data = rows.map(r => ({
+            Year: r[0],
+            TotalReceipts: Number(r[1]),
+            TotalArrivals: Number(r[2])
+          }));
+          console.log("Loaded CSV data:", data);
+        } else {
+          console.warn("CSV not found, using fallback data.");
+        }
+      } catch (err) {
+        console.warn("Error loading CSV, using fallback data:", err);
+      }
 
-    // Function to embed Vega-Lite visualizations
+      const yearSelect = document.getElementById("yearSelect");
+      const arrivalsValue = document.getElementById("arrivalsValue");
+      const receiptsValue = document.getElementById("receiptsValue");
+
+      // Populate dropdown
+      data.forEach(d => {
+        const opt = document.createElement("option");
+        opt.value = d.Year;
+        opt.textContent = d.Year;
+        yearSelect.appendChild(opt);
+      });
+
+      function formatNumber(num) {
+        return num.toLocaleString("en-US");
+      }
+
+      function updateValues(year) {
+        const selected = data.find(d => d.Year === year);
+        if (selected) {
+          arrivalsValue.textContent = formatNumber(selected.TotalArrivals);
+          receiptsValue.textContent = "$ " + (selected.TotalReceipts / 1e9).toFixed(2) + " B";
+        }
+      }
+
+      // Default to latest year
+      const latest = data[data.length - 1].Year;
+      yearSelect.value = latest;
+      updateValues(latest);
+
+      // Change listener
+      yearSelect.addEventListener("change", e => updateValues(e.target.value));
+    }
+
+    loadTourismData();
+  </script>
+
+  <!-- === VEGA EMBEDDING SCRIPT === -->
+  <script>
+    const embedOptions = { actions: false };
+
+    const visPaths = {
+      viz1: "./proportional_map.json",
+      viz2: "./choropleth_map.json",
+      viz3: "./tourist_spending.json",
+      viz4: "./spending_category.json",
+      viz5: "./growth_comparison.json",
+      viz6: "./travel_purpose.json"
+    };
+
     async function embedVis(id, url) {
       try {
         const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch ${url}`);
         const spec = await response.json();
         await vegaEmbed(id, spec, embedOptions);
       } catch (error) {
@@ -120,13 +189,7 @@
       }
     }
 
-    // Embed all visualizations
-    embedVis('#viz1', vis1);
-    embedVis('#viz2', vis2);
-    embedVis('#viz3', vis3);
-    embedVis('#viz4', vis4);
-    embedVis('#viz5', vis5);
-    embedVis('#viz6', vis6);
+    Object.entries(visPaths).forEach(([id, path]) => embedVis(`#${id}`, path));
   </script>
 </body>
 </html>
