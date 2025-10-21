@@ -28,14 +28,14 @@ header h1 {
 
 /* --- Year Dropdown --- */
 .year-dropdown {
-  width: 100%;
+  width: 70%;
   padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f8f8f8;
   font-size: 0.95em;
   font-family: inherit;
-  margin-top: 8px;
+  margin-top: 25px;
   text-align: center;
   transition: all 0.2s ease;
 }
@@ -158,4 +158,64 @@ footer {
 .placeholder {
   width: 100%;
   overflow: hidden;
+}
+
+/* --- Year Selector Wrapper --- */
+.year-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* --- Info Icon Container --- */
+.info-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.info-icon img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  vertical-align: middle;
+  transform: translateY(-2px); /* raises slightly */
+}
+
+/* --- Tooltip --- */
+.info-icon::after {
+  content: "Year filter only affects world map & number cards. ";
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  font-size: 0.8em;
+  padding: 6px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 10;
+}
+
+.info-icon::before {
+  content: "";
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* --- Show tooltip on hover --- */
+.info-icon:hover::after,
+.info-icon:hover::before {
+  opacity: 1;
 }
