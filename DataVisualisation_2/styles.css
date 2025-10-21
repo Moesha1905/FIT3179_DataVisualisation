@@ -240,12 +240,6 @@ footer a {
   opacity: 1;
 }
 
-.subtext {
-  font-style: italic;
-  color: #444;
-  font-size: larger;
-} 
-
 p {
   columns: 2 300px;           /* Two columns, each at least 300px wide */
   column-gap: 100px;
