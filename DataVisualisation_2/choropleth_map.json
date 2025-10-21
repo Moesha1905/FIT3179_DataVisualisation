@@ -51,8 +51,8 @@
           "title": "Percentage of Tourists"
         },
         "tooltip": [
-          {"field": "properties.name", "title": "State"},
-          {"field": "PROPORTION OF TOURIST", "title": "Tourist Percentage"}
+          {"field": "properties.name", "title": "State:"},
+          {"field": "PROPORTION OF TOURIST", "title": "Percentage of Tourists:"}
         ]
       }
     },

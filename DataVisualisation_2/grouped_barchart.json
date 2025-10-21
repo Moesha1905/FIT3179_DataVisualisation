@@ -17,7 +17,7 @@
   "mark": "bar",
   "encoding": {
     "x": {"field": "category", "type": "nominal", "title": "Year", "axis":{"labelAngle":0, "labelFontSize":10, "titleFontSize":12}},
-    "y": {"field": "value", "type": "quantitative", "title": "Percentage", "axis":{"titleFontSize":12}},
+    "y": {"field": "value", "type": "quantitative", "title": "Percentage of Tourist", "axis":{"titleFontSize":12}},
     "xOffset": {"field": "group"},
     "color": {
       "field": "group",
@@ -37,7 +37,7 @@
     "tooltip": [
       {"field": "category", "title": "Year:"},
       {"field": "group", "title": "Frequency of Visit:"},
-      {"field": "value", "title": "Percentage:", "format": ".1f"}
+      {"field": "value", "title": "Percentage of Tourists:", "format": ".1f"}
     ]
   }
 }

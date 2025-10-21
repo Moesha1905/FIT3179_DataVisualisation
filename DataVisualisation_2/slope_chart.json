@@ -36,7 +36,6 @@
     "detail": {"field": "MODE"},
     "tooltip": [
       {"field": "MODE", "type": "nominal", "title": "Mode of Transport:"},
-      {"field": "YEAR", "type": "ordinal", "title": "Year:"},
       {"field": "VALUE", "type": "quantitative", "title": "Number of Tourists:", "format": ",.0f"}
     ]
   },
