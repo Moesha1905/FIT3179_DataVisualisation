@@ -9,15 +9,21 @@
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Google font (title)-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Fondamento:ital@0;1&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
   <div class="dashboard">
     <header>
       <h1>Tourism Pulse of Malaysia</h1>
-      <span class="subtext">
+      <!-- <span class="subtext">
         Major focus on 2016 - 2019
-      </span>
+      </span> -->
     </header>
 
     <!-- === NUMBER CARDS SECTION === -->
@@ -103,8 +109,14 @@
 
   <footer>
     A visualisation by <strong>Moesha Novyna</strong> <br>
-    Last Updated on <strong>16/10/2025</strong> <br>
-    Data Sources: <strong>OpenDOSM, Kaggle, Tourism Malaysia Statistics</strong>.
+    Last Updated on <strong>21/10/2025</strong> <br>
+    Data Sources: 
+    <strong>
+      <a href="https://archive.data.gov.my/data/organization/lembaga-penggalakkan-pelancongan-malaysia?q=&sort=title_string+asc" target="_blank" rel="noopener noreferrer">Ministry of Tourism (Malaysia)</a>, 
+      <a href="https://www.kaggle.com/code/yyxian/malaysia-foreign-arrivals" target="_blank" rel="noopener noreferrer">Kaggle</a>, 
+      <a href="https://www.researchgate.net/publication/314440159_Tourist_Satisfaction_in_Malaysia" target="_blank" rel="noopener noreferrer">Tourism Research Paper</a>,
+      <a href="https://data.worldbank.org/indicator/ST.INT.ARVL?end=2019&locations=MY&start=2016&view=charta" target="_blank" rel="noopener noreferrer">World Data Bank</a>
+    </strong>
   </footer>
 
   <!-- === TOURISM DATA SCRIPT (Number Cards) === -->
@@ -180,12 +192,12 @@
   <script>
     const embedOptions = { actions: true };
     const visPaths = {
-      viz1: "./proportional_map.json",
-      viz2: "./choropleth_map.json",
-      viz3: "./radar_chart.json",
-      viz4: "./grouped_barchart.json",
-      viz5: "./word_cloud.json",
-      viz6: "./slope_chart.json"
+      viz1: "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/proportional_map.json",
+      viz2: "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/choropleth_map.json",
+      viz3: "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/radar_chart.json",
+      viz4: "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/grouped_barchart.json",
+      viz5: "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/word_cloud.json",
+      viz6: "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/slope_chart.json"
     };
 
     // Store Vega views for later updates
