@@ -9,33 +9,41 @@ body {
 
 /* --- Dashboard Container --- */
 .dashboard {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 30px 30px;
 }
 
 /* --- Header --- */
 header {
   text-align: center;
-  padding-top: 30px;
+  padding-top: 0px;
   margin-bottom: 40px;
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 60px;
+  margin-top: 0;
   margin-bottom: 6px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #7b0f0f;
+}
+
+h3 {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 30px;
 }
 
 /* --- Year Dropdown --- */
 .year-dropdown {
-  width: 70%;
+  width: 80%;
   padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f8f8f8;
   font-size: 0.95em;
   font-family: inherit;
-  margin-top: 25px;
+  margin-top: 20px;
   text-align: center;
   transition: all 0.2s ease;
 }
@@ -65,13 +73,15 @@ header h1 {
 }
 
 .region-name {
-  font-weight: 600;
+  font-weight: 500;
   color: #444;
   margin-bottom: 8px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: medium;
 }
 
 .number-value {
-  font-size: 1.6em;
+  font-size: 2em;
   font-weight: bold;
   color: #7b0f0f;
   margin-top: 4px;
@@ -103,13 +113,12 @@ header h1 {
 }
 
 .viz1 h3, .viz2 h3, .viz3 h3, .viz4 h3, .viz5 h3, .viz6 h3 {
-  font-size: 24px;
   margin-bottom: 5px;
   margin-top: 0%;
   color: #333;
 }
 
-.viz1 p, .viz2 p, .viz3 p, .viz4 p, .viz5 p, .viz6 p {
+.viz1 p, .viz2 p, .viz4 p, .viz5 p, .viz6 p {
   font-size: 14px;
   color: #666;
   margin-bottom: 20px;
@@ -218,4 +227,47 @@ footer {
 .info-icon:hover::after,
 .info-icon:hover::before {
   opacity: 1;
+}
+
+.subtext {
+  font-style: italic;
+  color: #444;
+  font-size: large;
+} 
+
+p {
+  columns: 2 300px;           /* Two columns, each at least 300px wide */
+  column-gap: 100px;
+  text-align: justify;
+  text-justify: inter-word;
+  width: 100%;
+  max-width: 60ch;
+  font-size: 14px;
+}
+
+.column-break {
+  break-before: column;      /* Force new column start */
+  display: block;
+}
+
+.highlight {
+  font-weight: 700;
+  color: #7b0f0f;
+}
+
+.note {
+  font-style: italic;
+  font-size: smaller;
+}
+
+.viz3 p {
+  text-align: justify;
+  width: 100%;
+  max-width: 70ch;
+}
+
+.viz5 p {
+  text-align: justify;
+  width: 100%;
+  max-width: 70ch;
 }
