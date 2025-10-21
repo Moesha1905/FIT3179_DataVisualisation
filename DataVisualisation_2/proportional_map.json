@@ -86,7 +86,7 @@
             {"op": "rank", "as": "rank"},
             {"op": "max", "field": "pct", "as": "maxPct"}
           ],
-          "sort": [{"field": "pct", "order": "descending"}]
+          "sort": [{"field": "pct", "order": "descending"}, {"field": "Country", "order":"ascending"}]
         },
         {"filter": "datum.rank == 1"},
         {
