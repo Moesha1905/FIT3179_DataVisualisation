@@ -1,24 +1,28 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "description": "Slope chart showing change in transport mode tourist numbers between 2010 and 2019, with labels at 2016.",
+  "description": "Slope chart showing change in transport mode tourist numbers between 2010 and 2019.",
   "data": {
     "url": "https://raw.githubusercontent.com/Moesha1905/FIT3179_DataVisualisation/refs/heads/main/DataVisualisation_2/transport.csv",
     "format": {"type": "csv"}
   },
+
   "width": 400,
-  "height": 400,
-  "padding": {"left": 40, "right": 20},
+  "height": 380,
+
+  "padding": {"left": 50, "right": 50, "top": 10, "bottom": 30},
+  "autosize": {"type": "fit", "contains": "padding"},
 
   "encoding": {
     "x": {
       "field": "YEAR",
       "type": "ordinal",
-      "axis": {"title": null, "labelAngle": 0,"labelFontSize":10}
+      "axis": {"title": null, "labelAngle": 0, "labelFontSize": 10}
     },
     "y": {
       "field": "VALUE",
       "type": "quantitative",
-      "axis": {"title": null, "grid": false, "format": ",.0f", "labelFontSize":10}
+      "scale": {"zero": false, "nice": true},
+      "axis": {"title": null, "grid": false, "format": ",.0f", "labelFontSize": 10}
     },
     "color": {
       "field": "MODE",
@@ -59,8 +63,8 @@
         "clip": false
       },
       "encoding": {
-        "text": {"field": "label", "type": "nominal"},
-        "color": {"field": "MODE", "type": "nominal"}
+        "text": {"field": "label"},
+        "color": {"field": "MODE"}
       }
     },
     {
@@ -77,8 +81,8 @@
         "clip": false
       },
       "encoding": {
-        "text": {"field": "label", "type": "nominal"},
-        "color": {"field": "MODE", "type": "nominal"}
+        "text": {"field": "label"},
+        "color": {"field": "MODE"}
       }
     }
   ],
